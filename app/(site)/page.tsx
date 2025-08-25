@@ -18,6 +18,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen">
+      {/* Top Spacing */}
+      <div className="pt-8 sm:pt-16 lg:pt-24 xl:pt-32"></div>
+      
       {/* Hero Section */}
       <section className="section-padding">
         <div className="container mx-auto max-w-6xl">
@@ -28,9 +31,13 @@ export default function HomePage() {
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary leading-tight">
                   {siteConfig.name}
                 </h1>
-                <p className="text-xl sm:text-2xl text-primary/80 leading-relaxed max-w-2xl">
-                  {siteConfig.tagline}
-                </p>
+                <div className="text-xl sm:text-2xl text-primary/80 leading-tight max-w-2xl">
+                  {siteConfig.tagline.split('\n').map((line, index) => (
+                    <div key={index} className={index > 0 ? 'mt-[16px]' : ''}>
+                      {line}
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* CTAs */}
@@ -77,14 +84,16 @@ export default function HomePage() {
             {/* Right: Headshot or Avatar */}
             <div className="flex justify-center lg:justify-end">
               {siteConfig.headshotPath ? (
-                <Image
-                  src={siteConfig.headshotPath}
-                  alt={`${siteConfig.name} headshot`}
-                  width={400}
-                  height={400}
-                  className="rounded-2xl shadow-lg"
-                  priority
-                />
+                <div className="w-96 h-96 rounded-2xl shadow-lg overflow-hidden">
+                  <Image
+                    src={siteConfig.headshotPath}
+                    alt={`${siteConfig.name} headshot`}
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover"
+                    priority
+                  />
+                </div>
               ) : (
                 <div className="w-80 h-80 bg-gradient-to-br from-accent to-accent/80 rounded-2xl shadow-lg flex items-center justify-center">
                   <span className="text-6xl font-bold text-white">IO</span>

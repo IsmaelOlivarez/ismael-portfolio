@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Ismael Olivarez",
-  tagline: "CS @ Columbia • SWE Intern @ Comerica • Building scalable backend systems & thoughtful applications",
-  headshotPath: null, // Set to "/images/headshot.jpg" if you have a headshot
+  tagline: "CS @ Columbia • 2x SWE Intern @ Comerica \n\n Building scalable backend systems & thoughtful applications",
+  headshotPath: "/images/headshot.jpeg", // Set to "/images/headshot.jpg" if you have a headshot
   email: "ismael.olivarez@columbia.edu",
   socials: {
     github: "https://github.com/IsmaelOlivarez",
