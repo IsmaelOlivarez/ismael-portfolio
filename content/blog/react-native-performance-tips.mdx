@@ -1,0 +1,186 @@
+---
+title: "React Native Performance Tips I Wish I Knew Earlier"
+date: "2024-08-10"
+description: "Quick tips and tricks for improving React Native app performance based on real-world experience."
+tags: ["react-native", "performance", "mobile", "optimization"]
+cover: "/images/blog/react-native-performance.jpg"
+---
+
+# React Native Performance Tips I Wish I Knew Earlier
+
+After building several React Native apps, I've learned some performance optimization techniques that can make a significant difference. Here are the key tips that helped me improve app performance.
+
+## 1. Use React.memo Wisely
+
+Don't wrap every component in `React.memo`. Only use it for components that:
+- Receive stable props
+- Render expensive content
+- Are re-rendered frequently
+
+```typescript
+// Good use case
+const ExpensiveChart = React.memo(({ data, config }) => {
+  // Expensive chart rendering
+  return <Chart data={data} config={config} />;
+});
+
+// Bad use case - props change frequently
+const SimpleText = React.memo(({ text }) => {
+  return <Text>{text}</Text>;
+});
+```
+
+## 2. Optimize FlatList Rendering
+
+FlatList is often a performance bottleneck. Here are the key optimizations:
+
+```typescript
+const OptimizedFlatList = () => {
+  const renderItem = useCallback(({ item }) => (
+    <ListItem item={item} />
+  ), []);
+
+  const keyExtractor = useCallback((item) => item.id, []);
+
+  const getItemLayout = useCallback((data, index) => ({
+    length: ITEM_HEIGHT,
+    offset: ITEM_HEIGHT * index,
+    index,
+  }), []);
+
+  return (
+    <FlatList
+      data={items}
+      renderItem={renderItem}
+      keyExtractor={keyExtractor}
+      getItemLayout={getItemLayout}
+      removeClippedSubviews={true}
+      maxToRenderPerBatch={10}
+      windowSize={10}
+    />
+  );
+};
+```
+
+## 3. Avoid Inline Styles and Functions
+
+Inline styles and functions are recreated on every render:
+
+```typescript
+// Bad - recreated every render
+<View style={{ backgroundColor: 'red', padding: 10 }}>
+  <Button onPress={() => handlePress()} />
+</View>
+
+// Good - stable references
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'red',
+    padding: 10,
+  },
+});
+
+const handlePress = useCallback(() => {
+  // handle press logic
+}, []);
+
+<View style={styles.container}>
+  <Button onPress={handlePress} />
+</View>
+```
+
+## 4. Use InteractionManager for Heavy Operations
+
+Defer heavy operations until after animations complete:
+
+```typescript
+const handleHeavyOperation = () => {
+  InteractionManager.runAfterInteractions(() => {
+    // Heavy operation here
+    processLargeDataset();
+  });
+};
+```
+
+## 5. Optimize Image Loading
+
+Images can significantly impact performance:
+
+```typescript
+// Use appropriate image sizes
+<Image
+  source={{ uri: imageUrl }}
+  style={styles.image}
+  resizeMode="cover"
+  fadeDuration={0}
+  loadingIndicatorSource={require('./placeholder.png')}
+/>
+
+// Consider using FastImage for better performance
+import FastImage from 'react-native-fast-image';
+
+<FastImage
+  source={{ uri: imageUrl }}
+  style={styles.image}
+  resizeMode={FastImage.resizeMode.cover}
+/>
+```
+
+## 6. Debounce User Input
+
+Prevent excessive API calls or expensive operations:
+
+```typescript
+import { debounce } from 'lodash';
+
+const debouncedSearch = useCallback(
+  debounce((query) => {
+    performSearch(query);
+  }, 300),
+  []
+);
+```
+
+## 7. Use Flipper for Performance Debugging
+
+Flipper is an excellent tool for debugging React Native performance:
+
+- Monitor network requests
+- Profile JavaScript performance
+- Debug layout issues
+- Monitor memory usage
+
+## Quick Wins
+
+These small changes can have big impacts:
+
+1. **Remove console.log statements** in production
+2. **Use production builds** for performance testing
+3. **Enable Hermes** engine for better performance
+4. **Use appropriate bundle splitting** for large apps
+
+## Performance Monitoring
+
+Always measure before and after optimizations:
+
+```typescript
+import { PerformanceObserver } from 'react-native-performance';
+
+const observer = new PerformanceObserver((list) => {
+  list.getEntries().forEach((entry) => {
+    console.log(`${entry.name}: ${entry.duration}ms`);
+  });
+});
+
+observer.observe({ entryTypes: ['measure'] });
+```
+
+## Conclusion
+
+Performance optimization is an ongoing process. Start with these fundamentals and use profiling tools to identify specific bottlenecks in your app.
+
+Remember: premature optimization is the root of all evil. Focus on the optimizations that provide the most impact for your specific use case.
+
+---
+
+*What performance tips have you found most valuable in React Native development?*

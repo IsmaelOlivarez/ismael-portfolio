@@ -1,0 +1,80 @@
+# BLOG POST TEMPLATE
+#
+# To add a new blog post:
+# 1. Copy this file and rename it to your-post-title.mdx
+# 2. Replace all placeholder content with your actual post content
+# 3. Add a cover image to /public/images/blog/ (optional)
+# 4. Update the frontmatter with your post information
+# 5. Write your post content below the frontmatter
+#
+# Note: Use .mdx extension for posts that need custom components
+
+---
+title: "Your Post Title"
+date: "YYYY-MM-DD"
+description: "Brief description of what the post is about"
+tags: ["tag1", "tag2", "tag3"]
+cover: "/images/blog/your-image.jpg"  # Optional
+---
+
+# Your Post Title
+
+Start your post content here. You can use standard Markdown syntax.
+
+## Subheadings
+
+Use ## for subheadings to organize your content.
+
+### Code Examples
+
+You can include code blocks:
+
+```typescript
+function example() {
+  return "Hello World";
+}
+```
+
+### Lists
+
+- Bullet point 1
+- Bullet point 2
+- Bullet point 3
+
+### Callouts
+
+You can use custom components like callouts:
+
+<Callout type="note">
+  This is a note callout with important information.
+</Callout>
+
+<Callout type="tip">
+  This is a tip callout with helpful advice.
+</Callout>
+
+<Callout type="warn">
+  This is a warning callout for important warnings.
+</Callout>
+
+### Images
+
+You can include images using the Figure component:
+
+<Figure 
+  src="/images/blog/example.jpg" 
+  alt="Description of the image" 
+  caption="Optional caption for the image"
+/>
+
+### Links
+
+Include [links to external resources](https://example.com) or internal pages.
+
+## Conclusion
+
+Wrap up your post with a conclusion and any calls to action.
+
+---
+
+*Feel free to add a personal note or question at the end to encourage engagement.*

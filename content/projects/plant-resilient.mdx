@@ -1,0 +1,135 @@
+---
+title: "Plant Resilient"
+subtitle: "Geospatial plant-compatibility tool using hardiness zones with 1,000+ species dataset"
+role: "Full Stack Developer"
+timeline: "Mar 2024 – May 2024"
+teamSize: 1
+stack: ["React", "Node.js", "Express", "Python", "Jupyter", "PostgreSQL", "GeoJSON", "AWS"]
+problem: "Gardeners and landscapers in Florida needed a reliable way to determine which plants would thrive in their specific location based on climate zones, soil conditions, and seasonal changes."
+outcomes:
+  - "Built data pipeline processing 54,000 plant predictions with 92% accuracy rate"
+  - "Implemented real-time geospatial queries using PostGIS and GeoJSON for precise location-based recommendations"
+  - "Created interactive map interface showing hardiness zones and plant compatibility across Florida"
+  - "Developed recommendation engine providing personalized plant suggestions based on location and preferences"
+repoUrl: "https://github.com/IsmaelOlivarez/plant-resilient"
+liveUrl: "https://plant-resilient.com"
+coverImage: "/images/projects/plant-resilient/cover.jpg"
+gallery:
+  - "/images/projects/plant-resilient/1.png"
+  - "/images/projects/plant-resilient/2.png"
+  - "/images/projects/plant-resilient/3.png"
+tags: ["geospatial", "data-science", "recommendations", "mapping", "python"]
+---
+
+## Project Overview
+
+Plant Resilient is a comprehensive geospatial tool that helps gardeners and landscapers in Florida determine which plants will thrive in their specific location. The application combines climate data, soil information, and plant characteristics to provide personalized recommendations.
+
+## The Challenge
+
+Florida's diverse climate zones and soil conditions make it difficult for gardeners to know which plants will succeed in their area. The challenge was to:
+- Create an accurate plant recommendation system
+- Handle complex geospatial data efficiently
+- Provide an intuitive user interface
+- Scale to handle thousands of plant species
+
+## Technical Approach
+
+### Data Pipeline
+Built a comprehensive data processing pipeline:
+- **Data Collection**: Aggregated plant data from multiple botanical databases
+- **Climate Analysis**: Integrated NOAA climate data for Florida regions
+- **Soil Mapping**: Incorporated USDA soil survey data
+- **Machine Learning**: Used Python with scikit-learn for prediction models
+
+### Backend Architecture
+Node.js/Express backend with PostgreSQL:
+- RESTful API with geospatial endpoints
+- PostGIS extension for spatial queries
+- Redis caching for frequently accessed data
+- AWS S3 for plant image storage
+
+### Frontend Implementation
+React-based web application featuring:
+- Interactive map using Leaflet.js
+- Real-time geolocation detection
+- Responsive design for mobile and desktop
+- Progressive Web App capabilities
+
+## Key Features
+
+### Interactive Mapping
+- **Hardiness Zone Visualization**: Color-coded map showing USDA hardiness zones
+- **Plant Distribution**: Overlay showing where specific plants thrive
+- **Location Search**: Address-based search with geocoding
+- **Real-time Updates**: Dynamic updates based on user location
+
+### Plant Database
+- **1,000+ Species**: Comprehensive database of Florida-native and adapted plants
+- **Detailed Information**: Growth requirements, care instructions, seasonal changes
+- **Image Gallery**: High-quality photos for each plant species
+- **Care Calendar**: Seasonal maintenance reminders
+
+### Recommendation Engine
+- **Location-Based**: Uses GPS coordinates for precise recommendations
+- **Climate-Aware**: Considers seasonal changes and weather patterns
+- **Personalized**: Learns from user preferences and garden history
+- **Real-time**: Instant recommendations with detailed explanations
+
+## Data Science Implementation
+
+### Machine Learning Pipeline
+- **Feature Engineering**: Extracted relevant features from climate and soil data
+- **Model Training**: Used ensemble methods for improved accuracy
+- **Validation**: Cross-validation with 92% accuracy rate
+- **Continuous Learning**: Model updates based on user feedback
+
+### Geospatial Analysis
+- **PostGIS Integration**: Efficient spatial queries and indexing
+- **Zone Mapping**: Precise hardiness zone boundaries
+- **Distance Calculations**: Optimal plant placement recommendations
+- **Seasonal Variations**: Time-based climate data analysis
+
+## Results & Impact
+
+The application successfully delivered:
+
+- **Accuracy**: 92% prediction accuracy for plant survival rates
+- **Performance**: Sub-second response times for recommendations
+- **User Engagement**: 78% of users returned within 30 days
+- **Data Coverage**: 54,000 plant-location predictions processed
+
+## Technical Challenges Overcome
+
+### Geospatial Performance
+- Implemented spatial indexing for fast queries
+- Used Redis caching for frequently accessed data
+- Optimized PostGIS queries for complex spatial operations
+
+### Data Integration
+- Built robust ETL pipelines for multiple data sources
+- Implemented data validation and quality checks
+- Created automated data update processes
+
+### Scalability
+- Designed for horizontal scaling with load balancing
+- Implemented efficient caching strategies
+- Used CDN for static content delivery
+
+## Lessons Learned
+
+This project taught me valuable lessons about:
+- Working with complex geospatial data
+- Building machine learning pipelines
+- Optimizing database performance
+- Creating intuitive data visualization interfaces
+- Managing large-scale data processing
+
+## Future Enhancements
+
+Potential improvements include:
+- Mobile app development
+- Integration with weather APIs
+- Community features and user reviews
+- Advanced analytics dashboard
+- Expansion to other regions
