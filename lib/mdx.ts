@@ -47,7 +47,24 @@ export function getProjects(): ProjectFrontmatter[] {
         slug: filename.replace(/\.mdx$/, ''),
       } as ProjectFrontmatter
     })
-    .sort((a, b) => new Date(b.timeline.split('–')[1].trim()).getTime() - new Date(a.timeline.split('–')[0].trim()).getTime())
+    .sort((a, b) => {
+      // Custom order: timeline first, then plant-resilient, then superchat
+      const order = ['timeline', 'plant-resilient', 'superchat']
+      const aIndex = order.indexOf(a.slug)
+      const bIndex = order.indexOf(b.slug)
+      
+      // If both slugs are in our custom order, sort by that order
+      if (aIndex !== -1 && bIndex !== -1) {
+        return aIndex - bIndex
+      }
+      
+      // If only one is in our custom order, prioritize it
+      if (aIndex !== -1) return -1
+      if (bIndex !== -1) return 1
+      
+      // For any other projects, fall back to timeline sorting
+      return new Date(b.timeline.split('–')[1].trim()).getTime() - new Date(a.timeline.split('–')[0].trim()).getTime()
+    })
   
   return projects
 }

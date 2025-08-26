@@ -45,34 +45,36 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-primary/10 bg-white/95 dark:bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-900/60">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo/Name */}
-          <Link 
-            href="/" 
-            className="flex items-center space-x-2 text-xl font-bold text-primary hover:text-accent transition-colors"
-          >
-            <span>{siteConfig.name}</span>
-          </Link>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
+        <div className="grid grid-cols-3 h-16 items-center gap-2 lg:gap-4">
+          {/* Logo/Name - Left */}
+          <div className="flex justify-start">
+            <Link 
+              href="/" 
+              className="flex items-center space-x-2 text-xl font-bold text-primary hover:text-accent transition-colors"
+            >
+              <span>{siteConfig.name}</span>
+            </Link>
+          </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation - Center */}
+          <nav className="hidden md:flex items-center justify-center space-x-4 lg:space-x-8">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-primary hover:text-accent transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-2 py-1"
+                className="text-primary hover:text-accent transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-1 lg:px-2 py-1 text-sm lg:text-base"
               >
                 {item.name}
               </Link>
             ))}
           </nav>
 
-          {/* Desktop Actions */}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Desktop Actions - Right */}
+          <div className="hidden md:flex items-center justify-end space-x-2 lg:space-x-4">
             <Link
               href="/resume.pdf"
-              className="btn-secondary flex items-center space-x-2"
+              className="btn-secondary flex items-center space-x-2 text-sm lg:text-base px-2 lg:px-4 py-2"
               target="_blank"
               rel="noopener noreferrer"
             >
