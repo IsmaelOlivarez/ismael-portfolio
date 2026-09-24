@@ -1,5 +1,4 @@
 import { SkillCategory } from '@/data/skills'
-import { TechBadge } from './TechBadge'
 
 interface SkillsMatrixProps {
   skills: SkillCategory[]
@@ -7,17 +6,19 @@ interface SkillsMatrixProps {
 
 export function SkillsMatrix({ skills }: SkillsMatrixProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
       {skills.map((category) => (
-        <div key={category.name} className="card text-center">
-          <h3 className="text-lg font-semibold text-primary mb-6">
+        <div key={category.name}>
+          <h3 className="border-b border-line pb-3 font-mono text-xs uppercase tracking-eyebrow text-accent">
             {category.name}
           </h3>
-          <div className="flex flex-wrap justify-center gap-2">
+          <ul>
             {category.skills.map((skill) => (
-              <TechBadge key={skill} text={skill} />
+              <li key={skill} className="border-b border-line py-2.5 text-lg text-ink/90">
+                {skill}
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       ))}
     </div>

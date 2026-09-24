@@ -1,81 +1,50 @@
 import { TimelineItem } from '@/data/timeline'
-import { Calendar, GraduationCap, Briefcase } from 'lucide-react'
-import { cn } from '@/lib/utils'
 
 interface TimelineProps {
   items: TimelineItem[]
 }
 
 export function Timeline({ items }: TimelineProps) {
-  const getIcon = (type: 'education' | 'experience') => {
-    return type === 'education' ? GraduationCap : Briefcase
-  }
-
-  const getIconColor = (type: 'education' | 'experience') => {
-    return type === 'education' 
-      ? 'bg-blue-500 text-white' 
-      : 'bg-accent text-white'
-  }
-
   return (
     <div className="relative">
-      {/* Timeline line */}
-      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-primary/20"></div>
-      
-      <div className="space-y-8">
-        {items.map((item, index) => {
-          const Icon = getIcon(item.type)
-          const iconColor = getIconColor(item.type)
-          
-          return (
-            <div key={item.id} className="relative flex items-start space-x-6">
-              {/* Icon */}
-              <div className={`relative z-10 flex items-center justify-center w-16 h-16 rounded-full ${iconColor} shadow-lg`}>
-                <Icon className="h-8 w-8" />
-              </div>
-              
-              {/* Content */}
-              <div className="flex-1 min-w-0">
-                <div className="bg-white dark:bg-primary/5 border border-primary/10 rounded-2xl p-6 shadow-sm">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-semibold text-primary">
-                      {item.title}
-                    </h3>
-                    <div className="flex items-center space-x-2 text-sm text-primary/60">
-                      <Calendar className="h-4 w-4" />
-                      <span>{item.period}</span>
-                    </div>
-                  </div>
-                  
-                  <h4 className="text-lg font-medium text-accent mb-3">
-                    {item.subtitle}
-                  </h4>
-                  
-                  <p className="text-primary/80 leading-relaxed mb-4">
-                    {item.description}
-                  </p>
-                  
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {item.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className={cn(
-                          'inline-flex items-center px-3 py-1 text-xs font-medium rounded-full',
-                          item.type === 'education' 
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-accent text-white'
-                        )}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+      {/* Rail */}
+      <div className="absolute bottom-2 left-0 top-2 w-px bg-line sm:left-40" aria-hidden />
+
+      <div className="space-y-12">
+        {items.map((item) => (
+          <div key={item.id} className="relative grid gap-4 sm:grid-cols-[10rem_1fr]">
+            {/* Period + type */}
+            <div className="pl-6 sm:pl-0 sm:pr-8 sm:text-right">
+              <p className="font-mono text-xs uppercase tracking-wider text-ink">{item.period}</p>
+              <p className="mt-1 font-mono text-[0.6rem] uppercase tracking-eyebrow text-accent">
+                {item.type}
+              </p>
+            </div>
+
+            {/* Node marker */}
+            <span
+              className="absolute left-[-4px] top-1.5 h-2 w-2 rounded-full border border-accent bg-bg sm:left-[9.75rem]"
+              aria-hidden
+            />
+
+            {/* Content */}
+            <div className="pl-6 sm:pl-8">
+              <h3 className="font-display text-2xl leading-snug text-ink">{item.title}</h3>
+              <p className="mt-1 text-accent">{item.subtitle}</p>
+              <p className="mt-3 max-w-2xl leading-relaxed text-muted">{item.description}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {item.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-line px-3 py-1 font-mono text-[0.66rem] uppercase tracking-wider text-muted"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
-          )
-        })}
+          </div>
+        ))}
       </div>
     </div>
   )

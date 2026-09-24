@@ -2,80 +2,90 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ProjectFrontmatter } from '@/lib/mdx'
 import { TechBadge } from './TechBadge'
-import { ArrowRight, Github, ExternalLink } from 'lucide-react'
+import { ArrowUpRight, Github, ExternalLink } from 'lucide-react'
 
 interface ProjectCardProps {
   project: ProjectFrontmatter
+  index?: number
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, index }: ProjectCardProps) {
+  const href = `/projects/${project.slug}`
+
   return (
-    <article className="card group hover:shadow-lg transition-all duration-300">
-      {/* Cover Image */}
-      <div className="relative aspect-video mb-4 overflow-hidden rounded-xl">
-        <Image
-          src={project.coverImage}
-          alt={`${project.title} cover image`}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-      </div>
+    <article className="card group flex flex-col overflow-hidden hover:border-accent/50">
+      {/* Cover — real image, or an editorial typographic panel when missing */}
+      <Link
+        href={href}
+        className="relative block aspect-[16/10] overflow-hidden border-b border-line"
+        aria-label={`${project.title} case study`}
+      >
+        {project.coverImage ? (
+          <Image
+            src={project.coverImage}
+            alt={`${project.title} cover`}
+            fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          />
+        ) : (
+          <div className="bg-grid flex h-full w-full flex-col items-center justify-center bg-surface px-6 text-center">
+            <span className="font-display text-3xl leading-tight text-ink/80 transition-colors group-hover:text-accent">
+              {project.title}
+            </span>
+            <span className="mt-2 font-mono text-[0.62rem] uppercase tracking-eyebrow text-muted">
+              {project.slug}
+            </span>
+          </div>
+        )}
+        {typeof index === 'number' && (
+          <span className="absolute left-4 top-4 font-mono text-xs text-accent mix-blend-difference">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+        )}
+      </Link>
 
-      {/* Content */}
-      <div className="space-y-4">
-        <div>
-          <h3 className="text-xl font-semibold text-primary mb-2 group-hover:text-accent transition-colors">
-            {project.title}
-          </h3>
-          <p className="text-primary/70 text-sm leading-relaxed">
-            {project.subtitle}
-          </p>
-        </div>
-
-        {/* Role & Timeline */}
-        <div className="flex items-center justify-between text-sm text-primary/60">
+      {/* Body */}
+      <div className="flex flex-1 flex-col gap-4 p-6">
+        <div className="flex items-center justify-between font-mono text-[0.66rem] uppercase tracking-wider text-muted">
           <span>{project.role}</span>
           <span>{project.timeline}</span>
         </div>
 
-        {/* Stack */}
+        <div>
+          <h3 className="font-display text-2xl leading-snug text-ink transition-colors group-hover:text-accent">
+            <Link href={href}>{project.title}</Link>
+          </h3>
+          <p className="mt-2 leading-relaxed text-muted">{project.subtitle}</p>
+        </div>
+
         <div className="flex flex-wrap gap-2">
           {project.stack.slice(0, 4).map((tech) => (
             <TechBadge key={tech} text={tech} />
           ))}
           {project.stack.length > 4 && (
-            <span className="text-xs text-primary/50 px-2 py-1">
-              +{project.stack.length - 4} more
+            <span className="inline-flex items-center px-1 font-mono text-[0.66rem] text-muted">
+              +{project.stack.length - 4}
             </span>
           )}
         </div>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2">
-          {project.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-md">
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Actions */}
-        <div className="flex items-center justify-between pt-2">
+        <div className="mt-auto flex items-center justify-between border-t border-line pt-4">
           <Link
-            href={`/projects/${project.slug}`}
-            className="inline-flex items-center text-accent hover:text-accent/80 font-medium transition-colors"
+            href={href}
+            className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:text-accent"
           >
-            View case study
-            <ArrowRight className="ml-1 h-4 w-4" />
+            Case study
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
-          
-          <div className="flex space-x-2">
+
+          <div className="flex items-center gap-1">
             {project.repoUrl && (
               <a
                 href={project.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-primary/60 hover:text-accent hover:bg-accent/10 rounded-lg transition-colors"
+                className="rounded-md p-2 text-muted transition-colors hover:text-accent"
                 aria-label="View source code"
               >
                 <Github className="h-4 w-4" />
@@ -86,7 +96,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-primary/60 hover:text-accent hover:bg-accent/10 rounded-lg transition-colors"
+                className="rounded-md p-2 text-muted transition-colors hover:text-accent"
                 aria-label="View live project"
               >
                 <ExternalLink className="h-4 w-4" />

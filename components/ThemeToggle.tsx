@@ -6,11 +6,10 @@ import { useState, useEffect } from 'react'
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false)
-  const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system')
-  
+  const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('dark')
+
   useEffect(() => {
     setMounted(true)
-    // Get saved theme from localStorage
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | 'system'
     if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
       setTheme(savedTheme)
@@ -20,10 +19,7 @@ export function ThemeToggle() {
 
   const applyTheme = (newTheme: 'light' | 'dark' | 'system') => {
     const root = document.documentElement
-    
-    // Remove existing theme classes
     root.classList.remove('light', 'dark')
-    
     if (newTheme === 'system') {
       const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
       root.classList.add(systemTheme)
@@ -44,42 +40,24 @@ export function ThemeToggle() {
     { value: 'system', icon: Monitor, label: 'System' },
   ] as const
 
-  // Don't render until mounted to avoid SSR issues
-  if (!mounted) {
-    return (
-      <div className="flex items-center space-x-1 rounded-lg bg-primary/10 p-1">
-        {themes.map(({ value, icon: Icon, label }) => (
-          <button
-            key={value}
-            className="flex items-center justify-center w-8 h-8 rounded-md transition-colors text-primary hover:bg-primary/20"
-            aria-label={`Switch to ${label} theme`}
-            title={`Switch to ${label} theme`}
-          >
-            <Icon className="h-4 w-4" />
-          </button>
-        ))}
-      </div>
-    )
-  }
-
   return (
-    <div className="flex items-center space-x-1 rounded-lg bg-primary/10 p-1">
+    <div className="flex items-center gap-0.5 rounded-full border border-line p-0.5">
       {themes.map(({ value, icon: Icon, label }) => {
-        const isActive = theme === value
+        const isActive = mounted && theme === value
         return (
           <button
             key={value}
             onClick={() => handleThemeChange(value)}
             className={cn(
-              'flex items-center justify-center w-8 h-8 rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2',
+              'flex h-7 w-7 items-center justify-center rounded-full transition-colors',
               isActive
-                ? 'bg-accent text-white'
-                : 'text-primary hover:bg-primary/20'
+                ? 'bg-accent text-accent-ink'
+                : 'text-muted hover:text-ink'
             )}
             aria-label={`Switch to ${label} theme`}
             title={`Switch to ${label} theme`}
           >
-            <Icon className="h-4 w-4" />
+            <Icon className="h-3.5 w-3.5" />
           </button>
         )
       })}

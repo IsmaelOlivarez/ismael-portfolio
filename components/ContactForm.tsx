@@ -100,7 +100,7 @@ export function ContactForm() {
 
       {/* Name Field */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-primary mb-2">
+        <label htmlFor="name" className="mb-2 block font-mono text-[0.62rem] uppercase tracking-eyebrow text-muted">
           Name *
         </label>
         <input
@@ -112,7 +112,7 @@ export function ContactForm() {
           required
           minLength={2}
           maxLength={80}
-          className="w-full px-4 py-3 border border-primary/20 rounded-2xl bg-white dark:bg-primary/5 text-primary placeholder-primary/40 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+          className="w-full rounded-lg border border-line bg-surface px-4 py-3 font-mono text-sm text-ink placeholder-muted transition-colors focus:border-accent focus:outline-none"
           placeholder="Your name"
           disabled={isSubmitting}
         />
@@ -120,7 +120,7 @@ export function ContactForm() {
 
       {/* Email Field */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-primary mb-2">
+        <label htmlFor="email" className="mb-2 block font-mono text-[0.62rem] uppercase tracking-eyebrow text-muted">
           Email *
         </label>
         <input
@@ -130,7 +130,7 @@ export function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           required
-          className="w-full px-4 py-3 border border-primary/20 rounded-2xl bg-white dark:bg-primary/5 text-primary placeholder-primary/40 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-colors"
+          className="w-full rounded-lg border border-line bg-surface px-4 py-3 font-mono text-sm text-ink placeholder-muted transition-colors focus:border-accent focus:outline-none"
           placeholder="your.email@example.com"
           disabled={isSubmitting}
         />
@@ -138,7 +138,7 @@ export function ContactForm() {
 
       {/* Message Field */}
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-primary mb-2">
+        <label htmlFor="message" className="mb-2 block font-mono text-[0.62rem] uppercase tracking-eyebrow text-muted">
           Message *
         </label>
         <textarea
@@ -150,7 +150,7 @@ export function ContactForm() {
           minLength={10}
           maxLength={2000}
           rows={6}
-          className="w-full px-4 py-3 border border-primary/20 rounded-2xl bg-white dark:bg-primary/5 text-primary placeholder-primary/40 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-colors resize-vertical"
+          className="w-full resize-y rounded-lg border border-line bg-surface px-4 py-3 font-mono text-sm text-ink placeholder-muted transition-colors focus:border-accent focus:outline-none"
           placeholder="Tell me about your project, opportunity, or just say hello..."
           disabled={isSubmitting}
         />

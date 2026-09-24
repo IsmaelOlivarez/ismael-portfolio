@@ -4,6 +4,21 @@ import matter from 'gray-matter'
 
 const contentDirectory = path.join(process.cwd(), 'content')
 
+/**
+ * Returns the public path only if the file exists and is non-empty.
+ * Guards against placeholder 0-byte images (e.g. missing project covers)
+ * that would otherwise render as broken images.
+ */
+function resolveImage(p?: string): string | null {
+  if (!p) return null
+  try {
+    const abs = path.join(process.cwd(), 'public', p.replace(/^\//, ''))
+    return fs.statSync(abs).size > 0 ? p : null
+  } catch {
+    return null
+  }
+}
+
 export interface ProjectFrontmatter {
   title: string
   subtitle: string
@@ -15,7 +30,7 @@ export interface ProjectFrontmatter {
   outcomes: string[]
   repoUrl?: string
   liveUrl?: string
-  coverImage: string
+  coverImage: string | null
   gallery: string[]
   tags: string[]
   slug: string
@@ -41,9 +56,13 @@ export function getProjects(): ProjectFrontmatter[] {
       const filePath = path.join(projectsDirectory, filename)
       const fileContents = fs.readFileSync(filePath, 'utf8')
       const { data } = matter(fileContents)
-      
+
       return {
         ...data,
+        coverImage: resolveImage(data.coverImage),
+        gallery: Array.isArray(data.gallery)
+          ? data.gallery.map(resolveImage).filter(Boolean)
+          : [],
         slug: filename.replace(/\.mdx$/, ''),
       } as ProjectFrontmatter
     })
@@ -78,6 +97,10 @@ export function getProject(slug: string): { frontmatter: ProjectFrontmatter; con
     return {
       frontmatter: {
         ...data,
+        coverImage: resolveImage(data.coverImage),
+        gallery: Array.isArray(data.gallery)
+          ? data.gallery.map(resolveImage).filter(Boolean)
+          : [],
         slug,
       } as ProjectFrontmatter,
       content,
@@ -97,9 +120,10 @@ export function getBlogPosts(): BlogFrontmatter[] {
       const filePath = path.join(blogDirectory, filename)
       const fileContents = fs.readFileSync(filePath, 'utf8')
       const { data } = matter(fileContents)
-      
+
       return {
         ...data,
+        cover: resolveImage(data.cover) ?? undefined,
         slug: filename.replace(/\.mdx$/, ''),
       } as BlogFrontmatter
     })

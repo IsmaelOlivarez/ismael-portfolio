@@ -13,7 +13,7 @@ export const siteConfig = {
     domain: "" // Set this to your domain when deploying
   },
   theme: {
-    default: "system" as const,
+    default: "dark" as const,
     allowToggle: true
   }
 } as const;

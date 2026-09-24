@@ -21,9 +21,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     setMounted(true)
     
-    // Get saved theme from localStorage
+    // URL param overrides (handy for previews/sharing), then localStorage, then default
+    const param = new URLSearchParams(window.location.search).get('theme') as Theme
     const savedTheme = localStorage.getItem('theme') as Theme
-    if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
+    if (param && ['light', 'dark', 'system'].includes(param)) {
+      setTheme(param)
+    } else if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
       setTheme(savedTheme)
     } else {
       setTheme(siteConfig.theme.default)
@@ -72,7 +75,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
-    return <div className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">{children}</div>
+    return <div className="bg-bg text-ink">{children}</div>
   }
 
   const value = {
