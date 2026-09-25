@@ -4,14 +4,15 @@ interface TechBadgeProps {
 }
 
 export function TechBadge({ text, variant = 'default' }: TechBadgeProps) {
-  const baseClasses = "px-3 py-1 text-xs font-medium rounded-full transition-colors"
-  
-  const variantClasses = variant === 'accent' 
-    ? "bg-accent/20 text-accent hover:bg-accent/30" 
-    : "bg-primary/10 text-primary hover:bg-primary/20"
+  const variantClasses =
+    variant === 'accent'
+      ? 'border-accent/40 text-accent'
+      : 'border-line text-muted hover:border-ink hover:text-ink'
 
   return (
-    <span className={`${baseClasses} ${variantClasses}`}>
+    <span
+      className={`inline-flex items-center rounded-full border px-3 py-1 font-mono text-[0.68rem] uppercase tracking-wider transition-colors ${variantClasses}`}
+    >
       {text}
     </span>
   )

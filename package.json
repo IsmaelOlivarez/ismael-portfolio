@@ -20,8 +20,7 @@
     "date-fns": "^3.0.6",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.303.0",
-    "next": "^15.5.0",
-    "next-mdx-remote": "^4.4.1",
+    "next": "^15.5.26",
     "nodemailer": "^6.9.7",
     "postcss": "^8.4.32",
     "react": "^18.2.0",
@@ -34,7 +33,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "eslint": "^8.56.0",
-    "eslint-config-next": "14.0.4",
+    "eslint-config-next": "^15.5.26",
     "prettier": "^3.1.1"
   },
   "license": "MIT"

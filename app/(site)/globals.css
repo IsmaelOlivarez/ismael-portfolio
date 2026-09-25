@@ -2,62 +2,165 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   Editorial palette — dark-first. Values are RGB channels so
+   Tailwind's `/opacity` modifiers work (rgb(var(--x) / <a>)).
+   ============================================================ */
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --accent: 24.6 95% 53.1%;
-    --accent-foreground: 60 9.1% 97.8%;
+  :root,
+  .dark {
+    --c-bg: 9 13 20;         /* #090D14 ink-navy black   */
+    --c-surface: 16 22 33;   /* #101621 lifted panel     */
+    --c-ink: 226 233 241;    /* #E2E9F1 cool off-white   */
+    --c-muted: 130 145 163;  /* #8291A3 cool gray        */
+    --c-line: 28 38 52;      /* #1C2634 blueprint line   */
+    --c-accent: 143 200 205; /* #8FC8CD soft pastel cyan */
+    --c-accent-soft: 179 221 224;
+    --c-accent-ink: 9 13 20;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --accent: 24.6 95% 53.1%;
-    --accent-foreground: 60 9.1% 97.8%;
+  .light {
+    --c-bg: 242 246 250;     /* #F2F6FA cool paper       */
+    --c-surface: 255 255 255;
+    --c-ink: 12 18 27;       /* #0C121B ink-navy         */
+    --c-muted: 82 95 114;    /* #525F72                  */
+    --c-line: 208 218 229;   /* #D0DAE5 blueprint line   */
+    --c-accent: 42 122 134;  /* #2A7A86 muted teal       */
+    --c-accent-soft: 32 96 107;
+    --c-accent-ink: 242 246 250;
   }
 }
 
 @layer base {
-  body {
-    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100;
-    font-feature-settings: "rlig" 1, "calt" 1;
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Skip to content link */
-  .skip-link {
-    @apply absolute -top-10 left-6 z-50 bg-orange-500 text-white px-4 py-2 rounded-md transition-transform duration-200;
+  body {
+    background-color: rgb(var(--c-bg));
+    color: rgb(var(--c-ink));
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
-  
+
+  ::selection {
+    background-color: rgb(var(--c-accent) / 0.28);
+    color: rgb(var(--c-ink));
+  }
+
+  /* Fraunces optical + soft settings for a warmer display serif */
+  .font-display {
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 30, "WONK" 0;
+  }
+
+  .skip-link {
+    @apply absolute -top-12 left-6 z-50 rounded-md bg-accent px-4 py-2 text-accent-ink transition-transform duration-200;
+  }
   .skip-link:focus {
     @apply top-6;
   }
 
-  /* Focus styles */
-  .focus-visible {
-    @apply outline-none ring-2 ring-orange-500 ring-offset-2 ring-offset-white dark:ring-offset-gray-900;
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-accent));
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 }
 
+/* ============================================================
+   Editorial component vocabulary
+   ============================================================ */
 @layer components {
-  .btn-primary {
-    @apply bg-orange-500 hover:bg-orange-600 text-white font-medium py-3 px-6 rounded-2xl transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2;
+  /* Uppercase letter-spaced label with a leading accent tick */
+  .eyebrow {
+    @apply inline-flex items-center gap-3 font-mono text-xs uppercase tracking-eyebrow text-muted;
   }
-  
+  .eyebrow::before {
+    content: "";
+    @apply inline-block h-px w-8 bg-accent;
+  }
+
+  /* Oversized faint serif section index, e.g. "01" */
+  .section-index {
+    @apply font-display text-sm font-medium text-accent;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hairline {
+    @apply border-0 border-t border-line;
+  }
+
+  /* Buttons — mono, letter-spaced, technical-editorial */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-mono text-xs uppercase tracking-[0.14em] transition-all duration-200 focus-visible:outline-none;
+    padding: 0.8rem 1.4rem;
+  }
+  .btn-primary {
+    @apply btn bg-accent text-accent-ink hover:bg-accent-soft;
+  }
   .btn-secondary {
-    @apply bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 font-medium py-3 px-6 rounded-2xl transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2;
+    @apply btn border border-line text-ink hover:border-ink;
+  }
+
+  /* Inline text link with animated underline */
+  .link-line {
+    @apply relative font-medium text-accent transition-colors;
+    background-image: linear-gradient(rgb(var(--c-accent)), rgb(var(--c-accent)));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 0.3s ease;
+    padding-bottom: 1px;
+  }
+  .link-line:hover {
+    background-size: 100% 1px;
   }
 
   .card {
-    @apply bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200;
+    @apply rounded-xl border border-line bg-surface transition-colors duration-300;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line px-3 py-1 font-mono text-[0.68rem] uppercase tracking-wider text-muted;
   }
 
   .section-padding {
-    @apply py-16 px-4 sm:px-6 lg:px-8;
+    @apply px-5 py-20 sm:px-8 md:py-28 lg:px-10;
+  }
+
+  /* Theme-aware long-form prose (Tailwind Typography variables) */
+  .prose-blueprint {
+    --tw-prose-body: rgb(var(--c-ink) / 0.9);
+    --tw-prose-headings: rgb(var(--c-ink));
+    --tw-prose-lead: rgb(var(--c-muted));
+    --tw-prose-links: rgb(var(--c-accent));
+    --tw-prose-bold: rgb(var(--c-ink));
+    --tw-prose-counters: rgb(var(--c-muted));
+    --tw-prose-bullets: rgb(var(--c-accent));
+    --tw-prose-hr: rgb(var(--c-line));
+    --tw-prose-quotes: rgb(var(--c-ink));
+    --tw-prose-quote-borders: rgb(var(--c-accent));
+    --tw-prose-captions: rgb(var(--c-muted));
+    --tw-prose-code: rgb(var(--c-ink));
+    --tw-prose-pre-code: rgb(var(--c-ink));
+    --tw-prose-pre-bg: rgb(var(--c-surface));
+    --tw-prose-th-borders: rgb(var(--c-line));
+    --tw-prose-td-borders: rgb(var(--c-line));
+  }
+  .prose-blueprint :where(h1, h2, h3, h4) {
+    font-family: var(--font-display), Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+  .prose-blueprint :where(code):not(pre code)::before,
+  .prose-blueprint :where(code):not(pre code)::after {
+    content: none;
+  }
+  .prose-blueprint :where(code):not(pre code) {
+    border: 1px solid rgb(var(--c-line));
+    border-radius: 0.3rem;
+    padding: 0.1rem 0.35rem;
+    font-size: 0.85em;
   }
 }
 
@@ -65,9 +168,46 @@
   .text-balance {
     text-wrap: balance;
   }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Blueprint graph paper — fine minor lines + heavier major lines */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(var(--c-line) / 0.6) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--c-line) / 0.6) 1px, transparent 1px),
+      linear-gradient(to right, rgb(var(--c-line) / 0.32) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--c-line) / 0.32) 1px, transparent 1px);
+    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+  }
+
+  /* Registration corner ticks (blueprint drawing frame) */
+  .tick-corners {
+    position: relative;
+  }
+  .tick-corners::before,
+  .tick-corners::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: rgb(var(--c-accent));
+    pointer-events: none;
+  }
+  .tick-corners::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1px solid;
+    border-left: 1px solid;
+  }
+  .tick-corners::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+  }
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

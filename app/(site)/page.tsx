@@ -1,225 +1,280 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { siteConfig } from '@/site.config'
-import { getProjects } from '@/lib/mdx'
-import { getBlogPosts } from '@/lib/mdx'
+import { getProjects, getBlogPosts } from '@/lib/mdx'
 import { skillsData } from '@/data/skills'
 import { ProjectCard } from '@/components/ProjectCard'
-import { TechBadge } from '@/components/TechBadge'
-import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react'
 import { generateSEO } from '@/lib/seo'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = generateSEO({})
 
 export default function HomePage() {
-  const projects = getProjects().slice(0, 3) // Show 3 featured projects
-  const blogPosts = getBlogPosts().slice(0, 2) // Show 2 latest posts
+  const projects = getProjects().slice(0, 3)
+  const blogPosts = getBlogPosts().slice(0, 2)
+  const [heroMeta, heroLead] = siteConfig.tagline.split('\n\n').map((s) => s.trim())
 
   return (
-    <div className="min-h-screen">
-      {/* Top Spacing */}
-      <div className="pt-8 sm:pt-16 lg:pt-24 xl:pt-32"></div>
-      
-      {/* Hero Section */}
-      <section className="section-padding">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Content */}
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary leading-tight">
-                  {siteConfig.name}
-                </h1>
-                <div className="text-xl sm:text-2xl text-primary/80 leading-tight max-w-2xl">
-                  {siteConfig.tagline.split('\n').map((line, index) => (
-                    <div key={index} className={index > 0 ? 'mt-[16px]' : ''}>
-                      {line}
-                    </div>
-                  ))}
-                </div>
-              </div>
+    <div>
+      {/* ============ HERO ============ */}
+      <section className="relative overflow-hidden border-b border-line">
+        <div className="bg-grid pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(120%_100%_at_top_left,black,transparent_70%)]" />
+        <div className="relative mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+          {/* Spec strip */}
+          <div className="flex items-center justify-between gap-4 border-b border-line py-3 font-mono text-[0.6rem] uppercase tracking-eyebrow text-muted">
+            <span className="text-ink">
+              IO<span className="text-muted"> — sys.portfolio</span>
+            </span>
+            <span className="hidden md:inline">40.7128°N&nbsp;&nbsp;74.0060°W</span>
+            <span>Est. 2025</span>
+          </div>
 
-              {/* CTAs */}
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/projects" className="btn-primary inline-flex items-center justify-center">
-                  View Projects
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-                <Link href="/resume.pdf" className="btn-secondary inline-flex items-center justify-center" target="_blank" rel="noopener noreferrer">
-                  Download Resume
-                </Link>
-              </div>
+          {/* Columns */}
+          <div className="flex flex-col gap-14 py-16 md:py-24 lg:grid lg:grid-cols-12 lg:items-center lg:gap-10">
+          {/* Left */}
+          <div className="w-full min-w-0 lg:col-span-7">
+            <p className="eyebrow animate-fade-in">Portfolio — 2025</p>
+            <h1 className="animate-rise mt-6 font-display text-[3.25rem] font-semibold leading-[0.95] tracking-tight text-ink sm:text-7xl">
+              {siteConfig.name}
+            </h1>
+            <p
+              className="animate-rise mt-6 max-w-xl text-pretty text-xl leading-relaxed text-muted sm:text-2xl"
+              style={{ animationDelay: '80ms' }}
+            >
+              {heroLead}
+            </p>
 
-              {/* Social Links */}
-              <div className="flex space-x-4">
-                <a
-                  href={siteConfig.socials.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary/70 hover:text-accent transition-colors p-2 rounded-lg hover:bg-primary/10"
-                  aria-label="GitHub"
-                >
-                  <Github className="h-6 w-6" />
-                </a>
-                <a
-                  href={siteConfig.socials.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary/70 hover:text-accent transition-colors p-2 rounded-lg hover:bg-primary/10"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="h-6 w-6" />
-                </a>
-                <a
-                  href={siteConfig.socials.email}
-                  className="text-primary/70 hover:text-accent transition-colors p-2 rounded-lg hover:bg-primary/10"
-                  aria-label="Email"
-                >
-                  <Mail className="h-6 w-6" />
-                </a>
-              </div>
+            <div
+              className="animate-rise mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs uppercase tracking-wider text-muted"
+              style={{ animationDelay: '140ms' }}
+            >
+              {heroMeta.split('•').map((piece, i) => (
+                <span key={i} className="inline-flex items-center gap-3">
+                  {i > 0 && <span className="h-1 w-1 rounded-full bg-accent" aria-hidden />}
+                  {piece.trim()}
+                </span>
+              ))}
             </div>
 
-            {/* Right: Headshot or Avatar */}
-            <div className="flex justify-center lg:justify-end">
-              {siteConfig.headshotPath ? (
-                <div className="w-96 h-96 rounded-2xl shadow-lg overflow-hidden">
+            <div
+              className="animate-rise mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
+              style={{ animationDelay: '200ms' }}
+            >
+              <Link href="/projects" className="btn-primary">
+                View Work
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+              >
+                Download Résumé
+              </Link>
+            </div>
+
+            <div
+              className="animate-fade-in mt-8 flex items-center gap-1"
+              style={{ animationDelay: '260ms' }}
+            >
+              {[
+                { href: siteConfig.socials.github, icon: Github, label: 'GitHub' },
+                { href: siteConfig.socials.linkedin, icon: Linkedin, label: 'LinkedIn' },
+                { href: siteConfig.socials.email, icon: Mail, label: 'Email' },
+              ].map(({ href, icon: Icon, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="rounded-md p-2 text-muted transition-colors hover:text-accent"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — framed headshot */}
+          <div className="w-full min-w-0 lg:col-span-5">
+            <div className="relative mx-auto w-full max-w-xs sm:max-w-sm lg:ml-auto lg:mr-0">
+              {/* blueprint dimension line */}
+              <span className="absolute -left-3 top-0 hidden h-full items-center lg:flex" aria-hidden>
+                <span className="h-full w-px bg-line" />
+              </span>
+              <div className="tick-corners relative aspect-[4/5] overflow-hidden border border-line bg-surface">
+                {siteConfig.headshotPath ? (
                   <Image
                     src={siteConfig.headshotPath}
                     alt={`${siteConfig.name} headshot`}
-                    width={400}
-                    height={400}
-                    className="w-full h-full object-cover"
+                    fill
                     priority
+                    sizes="(max-width: 1024px) 20rem, 24rem"
+                    className="object-cover"
                   />
-                </div>
-              ) : (
-                <div className="w-80 h-80 bg-gradient-to-br from-accent to-accent/80 rounded-2xl shadow-lg flex items-center justify-center">
-                  <span className="text-6xl font-bold text-white">IO</span>
-                </div>
-              )}
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center">
+                    <span className="font-display text-6xl text-ink/30">IO</span>
+                  </div>
+                )}
+                {/* corner label */}
+                <span className="absolute left-2 top-2 font-mono text-[0.55rem] uppercase tracking-eyebrow text-ink/70 mix-blend-difference">
+                  fig.01
+                </span>
+              </div>
+              <span className="mt-3 flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-eyebrow text-muted">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-40" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+                </span>
+                Open to SWE roles — 2026
+              </span>
             </div>
           </div>
+          </div>
         </div>
       </section>
 
-      {/* Featured Projects */}
-      <section className="section-padding bg-primary/5">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
-              Featured Projects
-            </h2>
-            <p className="text-lg text-primary/70 max-w-2xl mx-auto">
-              A selection of my recent work building scalable systems and thoughtful applications
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
+      {/* ============ SELECTED WORK ============ */}
+      <section className="section-padding">
+        <div className="mx-auto max-w-6xl">
+          <SectionHeader
+            index="01"
+            eyebrow="Selected Work"
+            title="Featured Projects"
+            link={{ href: '/projects', label: 'All work' }}
+          />
+          <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project, i) => (
+              <ProjectCard key={project.slug} project={project} index={i} />
             ))}
           </div>
-          
-          <div className="text-center mt-12">
-            <Link href="/projects" className="btn-secondary inline-flex items-center">
-              View All Projects
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* Skills & Tech */}
-      <section className="section-padding">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
-              Skills & Technologies
-            </h2>
-            <p className="text-lg text-primary/70 max-w-2xl mx-auto">
-              Technologies and tools I use to build robust, scalable applications
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* ============ CAPABILITIES ============ */}
+      <section className="section-padding border-t border-line">
+        <div className="mx-auto max-w-6xl">
+          <SectionHeader index="02" eyebrow="Toolkit" title="Skills & Technologies" />
+          <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
             {skillsData.map((category) => (
-              <div key={category.name} className="text-center">
-                <h3 className="text-lg font-semibold text-primary mb-4">{category.name}</h3>
-                <div className="flex flex-wrap justify-center gap-2">
+              <div key={category.name}>
+                <h3 className="border-b border-line pb-3 font-mono text-xs uppercase tracking-eyebrow text-accent">
+                  {category.name}
+                </h3>
+                <ul>
                   {category.skills.map((skill) => (
-                    <TechBadge key={skill} text={skill} />
+                    <li
+                      key={skill}
+                      className="border-b border-line py-2.5 text-lg text-ink/90"
+                    >
+                      {skill}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Latest Notes */}
-      <section className="section-padding bg-primary/5">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-4">
-              Latest Notes
-            </h2>
-            <p className="text-lg text-primary/70 max-w-2xl mx-auto">
-              Thoughts on technology, development, and building better software
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* ============ NOTES ============ */}
+      <section className="section-padding border-t border-line">
+        <div className="mx-auto max-w-6xl">
+          <SectionHeader
+            index="03"
+            eyebrow="Writing"
+            title="Latest Notes"
+            link={{ href: '/blog', label: 'All notes' }}
+          />
+          <div className="mt-6">
             {blogPosts.map((post) => (
-              <article key={post.slug} className="card">
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold text-primary">
-                    <Link href={`/blog/${post.slug}`} className="hover:text-accent transition-colors">
-                      {post.title}
-                    </Link>
-                  </h3>
-                  <p className="text-primary/70">{post.description}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-wrap gap-2">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <span key={tag} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-md">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="text-sm text-primary/60">{post.date}</span>
-                  </div>
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="group grid gap-3 border-t border-line py-8 md:grid-cols-[180px_1fr] md:gap-10"
+              >
+                <div className="font-mono text-xs uppercase tracking-wider text-muted">
+                  {post.date}
                 </div>
-              </article>
+                <div>
+                  <h3 className="font-display text-2xl leading-snug text-ink transition-colors group-hover:text-accent sm:text-3xl">
+                    {post.title}
+                  </h3>
+                  <p className="mt-3 max-w-2xl leading-relaxed text-muted">
+                    {post.description}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-accent">
+                    Read
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </span>
+                </div>
+              </Link>
             ))}
-          </div>
-          
-          <div className="text-center mt-12">
-            <Link href="/blog" className="btn-secondary inline-flex items-center">
-              Read More
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="section-padding">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-primary mb-6">
-            Let's Connect
+      {/* ============ CONTACT CTA ============ */}
+      <section className="border-t border-line">
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-32 lg:px-10">
+          <p className="eyebrow">[04] Contact</p>
+          <h2 className="mt-6 max-w-3xl font-display text-4xl leading-[1.05] tracking-tight text-ink sm:text-6xl">
+            Let&apos;s build something worth shipping.
           </h2>
-          <p className="text-lg text-primary/70 mb-8 max-w-2xl mx-auto">
-            I'm always interested in new opportunities and collaborations. 
-            Whether you have a project in mind or just want to chat, feel free to reach out.
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+            I&apos;m open to full-time roles, collaborations, and interesting technical problems.
+            The fastest way to reach me is email.
           </p>
-          <Link href="/contact" className="btn-primary inline-flex items-center">
-            Get In Touch
-            <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <Link href="/contact" className="btn-primary">
+              Get in touch
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a href={siteConfig.socials.email} className="btn-secondary">
+              {siteConfig.email}
+            </a>
+          </div>
         </div>
       </section>
+    </div>
+  )
+}
+
+/* ---- Local editorial section header ---- */
+function SectionHeader({
+  index,
+  eyebrow,
+  title,
+  link,
+}: {
+  index: string
+  eyebrow: string
+  title: string
+  link?: { href: string; label: string }
+}) {
+  return (
+    <div className="flex items-end justify-between gap-6 border-b border-line pb-6">
+      <div>
+        <p className="eyebrow">
+          [{index}] {eyebrow}
+        </p>
+        <h2 className="mt-4 font-display text-3xl tracking-tight text-ink sm:text-4xl">
+          {title}
+        </h2>
+      </div>
+      {link && (
+        <Link
+          href={link.href}
+          className="hidden shrink-0 items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-muted transition-colors hover:text-accent sm:inline-flex"
+        >
+          {link.label}
+          <ArrowUpRight className="h-4 w-4" />
+        </Link>
+      )}
     </div>
   )
 }

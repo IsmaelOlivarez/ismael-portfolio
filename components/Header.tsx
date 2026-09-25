@@ -2,134 +2,109 @@
 
 import Link from 'next/link'
 import { ThemeToggle } from './ThemeToggle'
-import { siteConfig } from '@/site.config'
-import { Menu, X, Download } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
-import { cn } from '@/lib/utils'
+
+const navigation = [
+  { name: 'Work', href: '/projects' },
+  { name: 'About', href: '/about' },
+  { name: 'Notes', href: '/blog' },
+  { name: 'Contact', href: '/contact' },
+]
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
 
+  // Lock scroll while the mobile menu is open
   useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const navigation = [
-    { name: 'Projects', href: '/projects' },
-    { name: 'About', href: '/about' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Contact', href: '/contact' },
-  ]
-
-  // Don't render until mounted to avoid SSR issues
-  if (!mounted) {
-    return (
-      <header className="sticky top-0 z-40 w-full border-b border-primary/10 bg-white/95 backdrop-blur">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <Link 
-              href="/" 
-              className="flex items-center space-x-2 text-xl font-bold text-primary"
-            >
-              <span>{siteConfig.name}</span>
-            </Link>
-            <div className="hidden md:flex items-center space-x-4">
-              <div className="w-24 h-8 bg-gray-200 rounded animate-pulse"></div>
-            </div>
-          </div>
-        </div>
-      </header>
-    )
-  }
+    document.body.style.overflow = isMenuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMenuOpen])
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-primary/10 bg-white/95 dark:bg-gray-900/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-900/60">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
-        <div className="grid grid-cols-3 h-16 items-center gap-2 lg:gap-4">
-          {/* Logo/Name - Left */}
-          <div className="flex justify-start">
-            <Link 
-              href="/" 
-              className="flex items-center space-x-2 text-xl font-bold text-primary hover:text-accent transition-colors"
-            >
-              <span>{siteConfig.name}</span>
-            </Link>
-          </div>
+    <header className="sticky top-0 z-40 w-full border-b border-line bg-bg/80 backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8 lg:px-10">
+        {/* Wordmark */}
+        <Link href="/" className="group flex items-baseline gap-2" aria-label="Home">
+          <span className="font-display text-lg tracking-tight text-ink transition-colors group-hover:text-accent">
+            Ismael Olivarez
+          </span>
+          <span className="hidden font-mono text-[0.6rem] uppercase tracking-eyebrow text-muted sm:inline">
+            SWE
+          </span>
+        </Link>
 
-          {/* Desktop Navigation - Center */}
-          <nav className="hidden md:flex items-center justify-center space-x-4 lg:space-x-8">
-            {navigation.map((item) => (
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-8 md:flex">
+          {navigation.map((item) => (
+            <Link
+              key={item.name}
+              href={item.href}
+              className="font-mono text-xs uppercase tracking-[0.16em] text-muted transition-colors hover:text-ink"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Desktop actions */}
+        <div className="hidden items-center gap-4 md:flex">
+          <div className="h-5 w-px bg-line" />
+          <ThemeToggle />
+          <Link
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs uppercase tracking-[0.14em] text-ink underline decoration-line decoration-1 underline-offset-4 transition-colors hover:decoration-accent"
+          >
+            Résumé
+          </Link>
+        </div>
+
+        {/* Mobile toggle */}
+        <button
+          type="button"
+          className="inline-flex items-center justify-center rounded-md p-2 text-ink md:hidden"
+          onClick={() => setIsMenuOpen((v) => !v)}
+          aria-expanded={isMenuOpen}
+          aria-label="Toggle navigation menu"
+        >
+          {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <div className="border-t border-line bg-bg md:hidden">
+          <nav className="mx-auto flex max-w-6xl flex-col px-5 py-4 sm:px-8">
+            {navigation.map((item, i) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-primary hover:text-accent transition-colors focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-md px-1 lg:px-2 py-1 text-sm lg:text-base"
+                className="flex items-baseline gap-3 border-b border-line py-4 font-display text-2xl text-ink transition-colors hover:text-accent"
+                onClick={() => setIsMenuOpen(false)}
               >
+                <span className="font-mono text-xs text-accent">{String(i + 1).padStart(2, '0')}</span>
                 {item.name}
               </Link>
             ))}
-          </nav>
-
-          {/* Desktop Actions - Right */}
-          <div className="hidden md:flex items-center justify-end space-x-2 lg:space-x-4">
-            <Link
-              href="/resume.pdf"
-              className="btn-secondary flex items-center space-x-2 text-sm lg:text-base px-2 lg:px-4 py-2"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Download className="h-4 w-4" />
-              <span>Resume</span>
-            </Link>
-            <ThemeToggle />
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            type="button"
-            className="md:hidden inline-flex items-center justify-center p-2 rounded-md text-primary hover:text-accent hover:bg-primary/10 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-expanded={isMenuOpen}
-            aria-label="Toggle navigation menu"
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 border-t border-primary/10">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block px-3 py-2 text-primary hover:text-accent hover:bg-primary/10 rounded-md transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
+            <div className="flex items-center justify-between pt-6">
               <Link
                 href="/resume.pdf"
-                className="block px-3 py-2 text-primary hover:text-accent hover:bg-primary/10 rounded-md transition-colors"
-                onClick={() => setIsMenuOpen(false)}
                 target="_blank"
                 rel="noopener noreferrer"
+                className="font-mono text-xs uppercase tracking-[0.14em] text-ink underline decoration-line underline-offset-4"
+                onClick={() => setIsMenuOpen(false)}
               >
-                Resume
+                Résumé
               </Link>
-              <div className="px-3 py-2">
-                <ThemeToggle />
-              </div>
+              <ThemeToggle />
             </div>
-          </div>
-        )}
-      </div>
+          </nav>
+        </div>
+      )}
     </header>
   )
 }

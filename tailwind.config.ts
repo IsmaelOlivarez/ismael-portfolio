@@ -1,5 +1,8 @@
 import type { Config } from 'tailwindcss'
 
+/** Semantic color backed by a CSS variable of space-separated RGB channels. */
+const withAlpha = (variable: string) => `rgb(var(${variable}) / <alpha-value>)`
+
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -10,48 +13,45 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
-        },
+        // Editorial semantic palette (values live in globals.css)
+        bg: withAlpha('--c-bg'),
+        surface: withAlpha('--c-surface'),
+        ink: withAlpha('--c-ink'),
+        muted: withAlpha('--c-muted'),
+        line: withAlpha('--c-line'),
         accent: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          200: '#fed7aa',
-          300: '#fdba74',
-          400: '#fb923c',
-          500: '#f97316',
-          600: '#ea580c',
-          700: '#c2410c',
-          800: '#9a3412',
-          900: '#7c2d12',
-          950: '#431407',
+          DEFAULT: withAlpha('--c-accent'),
+          soft: withAlpha('--c-accent-soft'),
+          ink: withAlpha('--c-accent-ink'),
+        },
+        // Back-compat aliases so legacy `text-primary` / `bg-primary/5` resolve
+        primary: {
+          DEFAULT: withAlpha('--c-ink'),
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Merriweather', 'Georgia', 'serif'],
+        display: ['var(--font-display)', 'Georgia', 'serif'],
+        body: ['var(--font-body)', 'Georgia', 'serif'],
+        sans: ['var(--font-body)', 'Georgia', 'serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+      },
+      maxWidth: {
+        prose: '68ch',
+      },
+      letterSpacing: {
+        eyebrow: '0.22em',
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.5s ease-out',
+        'fade-in': 'fadeIn 0.6s ease-in-out both',
+        'rise': 'rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both',
       },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
-        slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
+        rise: {
+          '0%': { transform: 'translateY(18px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
       },

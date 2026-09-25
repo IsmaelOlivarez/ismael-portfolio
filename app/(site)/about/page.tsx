@@ -1,114 +1,117 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { siteConfig } from '@/site.config'
 import { timelineData } from '@/data/timeline'
 import { skillsData } from '@/data/skills'
 import { Timeline } from '@/components/Timeline'
 import { SkillsMatrix } from '@/components/SkillsMatrix'
+import { PageHeader } from '@/components/PageHeader'
 import { generateSEO } from '@/lib/seo'
 import { Metadata } from 'next'
+import { ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = generateSEO({
   title: 'About',
-  description: 'Learn more about Ismael Olivarez, a CS student at Columbia University and SWE intern at Comerica Bank.',
+  description:
+    'Learn more about Ismael Olivarez, a CS student at Columbia University and SWE intern at Comerica Bank.',
 })
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen">
-      {/* Header */}
+    <div>
+      <PageHeader
+        index="B"
+        kicker="Profile"
+        title="About"
+        lead="CS student at Columbia and 2x SWE intern at Comerica — building scalable backend services and thoughtful applications across web and mobile."
+        spec="New York, NY"
+      />
+
+      {/* Intro + portrait */}
       <section className="section-padding">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl sm:text-5xl font-bold text-primary mb-6">
-              About Me
-            </h1>
-            <div className="max-w-3xl mx-auto">
-              <p className="text-lg text-primary/80 leading-relaxed mb-6">
-                I'm Ismael Olivarez, a CS student at Columbia University and current SWE intern at Comerica Bank. 
-                I build scalable backend services and thoughtful applications across mobile and web, with experience 
-                spanning Spring Boot, React/React Native, and AWS.
-              </p>
-              <p className="text-lg text-primary/80 leading-relaxed">
-                Previously, I shipped projects like Timeline (a customizable social app) and Plant Resilient 
-                (a geospatial plant-compatibility tool).
-              </p>
-            </div>
+        <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.6fr_1fr] lg:items-start">
+          <div className="space-y-6 text-lg leading-relaxed text-ink/90">
+            <p>
+              I&apos;m Ismael Olivarez, a CS student at Columbia University and current SWE intern at
+              Comerica Bank. I build scalable backend services and thoughtful applications across
+              mobile and web, with experience spanning Spring Boot, React / React Native, and AWS.
+            </p>
+            <p className="text-muted">
+              Previously, I shipped projects like Timeline (a customizable social app) and Plant
+              Resilient (a geospatial plant-compatibility tool) — the kind of systems work that has
+              to hold up under real traffic.
+            </p>
           </div>
 
-          {/* Headshot or Avatar */}
-          <div className="flex justify-center mb-12">
-            {siteConfig.headshotPath ? (
-              <Image
-                src={siteConfig.headshotPath}
-                alt={`${siteConfig.name} headshot`}
-                width={300}
-                height={300}
-                className="rounded-2xl shadow-lg"
-              />
-            ) : (
-              <div className="w-80 h-80 bg-gradient-to-br from-accent to-accent/80 rounded-2xl shadow-lg flex items-center justify-center">
-                <span className="text-5xl font-bold text-white">IO</span>
-              </div>
-            )}
+          <div className="relative mx-auto w-full max-w-xs lg:ml-auto lg:mr-0">
+            <div className="tick-corners relative aspect-[4/5] overflow-hidden border border-line bg-surface">
+              {siteConfig.headshotPath ? (
+                <Image
+                  src={siteConfig.headshotPath}
+                  alt={`${siteConfig.name} headshot`}
+                  fill
+                  sizes="20rem"
+                  className="object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center">
+                  <span className="font-display text-6xl text-ink/30">IO</span>
+                </div>
+              )}
+              <span className="absolute left-2 top-2 font-mono text-[0.55rem] uppercase tracking-eyebrow text-ink/70 mix-blend-difference">
+                fig.02
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="section-padding bg-primary/5">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary mb-4">
-              Education & Experience
+      <section className="section-padding border-t border-line">
+        <div className="mx-auto max-w-5xl">
+          <div className="mb-12 border-b border-line pb-6">
+            <p className="eyebrow">[01] Trajectory</p>
+            <h2 className="mt-4 font-display text-3xl tracking-tight text-ink sm:text-4xl">
+              Education &amp; Experience
             </h2>
-            <p className="text-lg text-primary/70 max-w-2xl mx-auto">
-              My journey in computer science and software engineering
-            </p>
           </div>
           <Timeline items={timelineData} />
         </div>
       </section>
 
-      {/* Skills Matrix */}
-      <section className="section-padding">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-primary mb-4">
-              Skills & Expertise
+      {/* Skills */}
+      <section className="section-padding border-t border-line">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-12 border-b border-line pb-6">
+            <p className="eyebrow">[02] Toolkit</p>
+            <h2 className="mt-4 font-display text-3xl tracking-tight text-ink sm:text-4xl">
+              Skills &amp; Expertise
             </h2>
-            <p className="text-lg text-primary/70 max-w-2xl mx-auto">
-              Technologies and tools I use to build robust, scalable applications
-            </p>
           </div>
           <SkillsMatrix skills={skillsData} />
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-primary/5">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl font-bold text-primary mb-6">
-            Let's Work Together
+      <section className="border-t border-line">
+        <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 md:py-28 lg:px-10">
+          <p className="eyebrow">[03] Contact</p>
+          <h2 className="mt-6 max-w-3xl font-display text-4xl leading-[1.05] tracking-tight text-ink sm:text-5xl">
+            Let&apos;s work together.
           </h2>
-          <p className="text-lg text-primary/70 mb-8 max-w-2xl mx-auto">
-            I'm always interested in new opportunities, collaborations, and interesting projects. 
-            Feel free to reach out if you'd like to connect.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={siteConfig.socials.email}
-              className="btn-primary inline-flex items-center justify-center"
-            >
-              Get In Touch
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <a href={siteConfig.socials.email} className="btn-primary">
+              Get in touch
+              <ArrowRight className="h-4 w-4" />
             </a>
-            <a
+            <Link
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary inline-flex items-center justify-center"
+              className="btn-secondary"
             >
-              View Resume
-            </a>
+              View Résumé
+            </Link>
           </div>
         </div>
       </section>
