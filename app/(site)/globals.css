@@ -48,10 +48,9 @@
     color: rgb(var(--c-ink));
   }
 
-  /* Fraunces optical + soft settings for a warmer display serif */
+  /* Space Grotesk display: tighten tracking slightly for headings */
   .font-display {
-    font-optical-sizing: auto;
-    font-variation-settings: "SOFT" 30, "WONK" 0;
+    letter-spacing: -0.01em;
   }
 
   .skip-link {
@@ -149,7 +148,7 @@
     --tw-prose-td-borders: rgb(var(--c-line));
   }
   .prose-blueprint :where(h1, h2, h3, h4) {
-    font-family: var(--font-display), Georgia, serif;
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
     letter-spacing: -0.01em;
   }
   .prose-blueprint :where(code):not(pre code)::before,

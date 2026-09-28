@@ -1,23 +1,22 @@
 import type { Metadata } from 'next'
-import { Fraunces, Newsreader, IBM_Plex_Mono } from 'next/font/google'
+import { Space_Grotesk, Inter, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { generateSEO } from '@/lib/seo'
 
-const fraunces = Fraunces({
+const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
   variable: '--font-display',
   display: 'swap',
-  axes: ['opsz', 'SOFT', 'WONK'],
+  weight: ['400', '500', '600', '700'],
 })
 
-const newsreader = Newsreader({
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
-  style: ['normal', 'italic'],
 })
 
 const plexMono = IBM_Plex_Mono({
@@ -52,7 +51,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${fraunces.variable} ${newsreader.variable} ${plexMono.variable} font-body antialiased`}>
+      <body className={`${spaceGrotesk.variable} ${inter.variable} ${plexMono.variable} font-body antialiased`}>
         <ThemeProvider>
           <div className="relative flex min-h-screen flex-col bg-bg text-ink">
             <a href="#main-content" className="skip-link">
