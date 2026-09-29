@@ -1,30 +1,27 @@
 import type { Metadata } from 'next'
-import { Fraunces, Newsreader, IBM_Plex_Mono } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { generateSEO } from '@/lib/seo'
 
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  variable: '--font-display',
-  display: 'swap',
-  axes: ['opsz', 'SOFT', 'WONK'],
-})
-
-const newsreader = Newsreader({
+const geist = Geist({
   subsets: ['latin'],
   variable: '--font-body',
   display: 'swap',
-  style: ['normal', 'italic'],
 })
 
-const plexMono = IBM_Plex_Mono({
+const geistDisplay = Geist({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+})
+
+const geistMono = Geist_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
   display: 'swap',
-  weight: ['400', '500', '600'],
 })
 
 export const metadata: Metadata = generateSEO({})
@@ -52,7 +49,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${fraunces.variable} ${newsreader.variable} ${plexMono.variable} font-body antialiased`}>
+      <body className={`${geistDisplay.variable} ${geist.variable} ${geistMono.variable} font-body antialiased`}>
         <ThemeProvider>
           <div className="relative flex min-h-screen flex-col bg-bg text-ink">
             <a href="#main-content" className="skip-link">

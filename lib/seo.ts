@@ -1,6 +1,9 @@
 import { Metadata } from 'next'
 import { siteConfig } from '@/site.config'
 
+/** Canonical site origin, used across SEO metadata, sitemap and robots. */
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+
 export interface SEOProps {
   title?: string
   description?: string
@@ -23,7 +26,6 @@ export function generateSEO({
   const siteTitle = title ? `${title} | ${siteConfig.name}` : siteConfig.name
   const siteDescription = description || siteConfig.tagline
   const siteImage = image || '/og-base.png'
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 
   return {
     title: siteTitle,
@@ -79,7 +81,7 @@ export function generateStructuredData(type: 'Person' | 'CreativeWork' | 'Articl
         ...baseData,
         name: siteConfig.name,
         email: siteConfig.email,
-        url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+        url: siteUrl,
         sameAs: [
           siteConfig.socials.github,
           siteConfig.socials.linkedin,
