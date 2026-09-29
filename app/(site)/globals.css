@@ -14,8 +14,8 @@
     --c-ink: 226 233 241;    /* #E2E9F1 cool off-white   */
     --c-muted: 130 145 163;  /* #8291A3 cool gray        */
     --c-line: 28 38 52;      /* #1C2634 blueprint line   */
-    --c-accent: 143 200 205; /* #8FC8CD soft pastel cyan */
-    --c-accent-soft: 179 221 224;
+    --c-accent: 122 209 210; /* #7AD1D2 brighter aqua-cyan */
+    --c-accent-soft: 166 228 229;
     --c-accent-ink: 9 13 20;
   }
 
@@ -25,8 +25,8 @@
     --c-ink: 12 18 27;       /* #0C121B ink-navy         */
     --c-muted: 82 95 114;    /* #525F72                  */
     --c-line: 208 218 229;   /* #D0DAE5 blueprint line   */
-    --c-accent: 42 122 134;  /* #2A7A86 muted teal       */
-    --c-accent-soft: 32 96 107;
+    --c-accent: 21 118 130;  /* #157682 deeper teal      */
+    --c-accent-soft: 16 92 103;
     --c-accent-ink: 242 246 250;
   }
 }
