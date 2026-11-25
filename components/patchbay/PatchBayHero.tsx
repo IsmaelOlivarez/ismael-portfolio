@@ -44,7 +44,7 @@ export function PatchBayHero() {
       onPointerLeave={onLeave}
       className="studio relative border-b border-line"
     >
-      <div className="mx-auto max-w-6xl px-5 pb-10 pt-6 sm:px-8 lg:px-10">
+      <div className="mx-auto max-w-6xl px-5 pb-8 pt-5 sm:px-8 lg:px-10">
         {/* ===== Top rack rail ===== */}
         <div className="panel panel-raised mb-4 flex items-center justify-between gap-4 rounded-md px-4 py-2.5">
           <div className="flex items-center gap-3">
@@ -73,10 +73,16 @@ export function PatchBayHero() {
             active={patched}
           />
 
-          <div className="relative grid gap-10 p-6 sm:p-9 lg:grid-cols-12 lg:gap-8 lg:p-11">
+          <div className="relative grid gap-8 p-5 sm:p-7 lg:grid-cols-12 lg:gap-8 lg:p-8">
             {/* ---- Left: identity face ---- */}
             <div className="min-w-0 lg:col-span-7">
               <div className="flex items-center gap-3">
+                {/* compact face below lg, where the big module is hidden */}
+                <span className="relative block h-12 w-12 shrink-0 overflow-hidden rounded-md border border-line bg-panel lg:hidden">
+                  {siteConfig.headshotPath && (
+                    <Image src={siteConfig.headshotPath} alt="" fill sizes="3rem" className="object-cover" />
+                  )}
+                </span>
                 <span className="font-display text-5xl font-black leading-none tracking-tight text-ink sm:text-6xl">
                   IO
                 </span>
@@ -86,15 +92,15 @@ export function PatchBayHero() {
                 </span>
               </div>
 
-              <h1 className="mt-8 font-display text-[2.8rem] font-semibold leading-[0.98] tracking-tight text-ink sm:text-6xl">
+              <h1 className="mt-6 font-display text-[2.8rem] font-semibold leading-[0.98] tracking-tight text-ink sm:text-6xl">
                 {siteConfig.name}
               </h1>
-              <p className="mt-5 max-w-xl text-pretty text-lg leading-relaxed text-muted sm:text-xl">
+              <p className="mt-4 max-w-xl text-pretty text-lg leading-relaxed text-muted sm:text-xl">
                 {heroLead}
               </p>
 
               {/* readout strip */}
-              <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2">
+              <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
                 {metaPieces.map((piece, i) => (
                   <span key={i} className="readout inline-flex items-center gap-2">
                     <span className="inline-block h-1 w-1 rounded-full bg-accent" aria-hidden />
@@ -104,15 +110,17 @@ export function PatchBayHero() {
               </div>
 
               {/* control cluster */}
-              <div className="mt-9 flex flex-wrap items-end gap-6">
+              <div className="mt-6 flex flex-wrap items-end gap-6">
                 <Knob label="GAIN" value={0.7} drift />
                 <Knob label="TONE" value={0.42} drift />
-                <VuMeter label="OUTPUT" />
+                <span className="hidden sm:block">
+                  <VuMeter label="OUTPUT" />
+                </span>
               </div>
             </div>
 
-            {/* ---- Right: headshot module ---- */}
-            <div className="min-w-0 lg:col-span-5">
+            {/* ---- Right: headshot module (desktop) ---- */}
+            <div className="hidden min-w-0 lg:col-span-5 lg:block">
               <div className="panel panel-raised relative mx-auto w-full max-w-xs overflow-hidden rounded-md p-2 lg:ml-auto lg:mr-0">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-sm border border-line bg-bg">
                   {siteConfig.headshotPath ? (
@@ -148,7 +156,7 @@ export function PatchBayHero() {
           </div>
 
           {/* ===== Bottom patch strip: SRC ──cable──▶ OUTPUT ===== */}
-          <div className="relative border-t border-line bg-bg/40 px-6 py-5 sm:px-9 lg:px-11">
+          <div className="relative border-t border-line bg-bg/40 px-5 py-4 sm:px-7 lg:px-8">
             <div className="flex flex-wrap items-center justify-between gap-6">
               <div className="flex items-center gap-6">
                 <Jack label="SRC" sub="input" lit anchorRef={inputRef} tone="amber" />

@@ -279,12 +279,11 @@
       rgb(var(--c-bg));
   }
 
-  /* Legacy decorative utilities (kept remapped for un-migrated pages). */
+  /* Legacy decorative utility repurposed as a soft studio glow (no grid lines)
+     so un-migrated pages inherit the Patch Bay material, not the old signature. */
   .bg-grid {
-    background-image:
-      linear-gradient(to right, rgb(var(--c-line) / 0.5) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--c-line) / 0.5) 1px, transparent 1px);
-    background-size: 28px 28px, 28px 28px;
+    background:
+      radial-gradient(70% 60% at 50% 0%, rgb(var(--c-metal) / 0.07), transparent 72%);
   }
   .tick-corners {
     position: relative;
