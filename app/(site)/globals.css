@@ -320,6 +320,23 @@
 @keyframes signal-dash {
   to { stroke-dashoffset: -32; }
 }
+@keyframes vu-sway {
+  0%   { transform: rotate(-16deg); }
+  28%  { transform: rotate(10deg); }
+  54%  { transform: rotate(-4deg); }
+  76%  { transform: rotate(18deg); }
+  100% { transform: rotate(-16deg); }
+}
+@keyframes knob-sway {
+  0%, 100% { transform: rotate(var(--knob-a, 0deg)); }
+  50% { transform: rotate(calc(var(--knob-a, 0deg) + 5deg)); }
+}
+.vu-needle {
+  animation: vu-sway 7s ease-in-out infinite;
+}
+.knob-drift {
+  animation: knob-sway 6s ease-in-out infinite;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
