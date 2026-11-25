@@ -50,7 +50,7 @@ export function PatchBayHero() {
           <div className="flex items-center gap-3">
             <Screw />
             <span className="silk silk-ink">IO</span>
-            <span className="silk text-muted/70">sys.portfolio · rack 01</span>
+            <span className="silk text-muted">sys.portfolio · rack 01</span>
           </div>
           <div className="flex items-center gap-5">
             <StatusLed label="PWR" tone="green" />
@@ -88,7 +88,7 @@ export function PatchBayHero() {
                 </span>
                 <span className="mt-1 flex flex-col">
                   <span className="silk silk-accent">module</span>
-                  <span className="silk text-muted/70">v2026 · experience</span>
+                  <span className="silk text-muted">v2026 · experience</span>
                 </span>
               </div>
 
@@ -137,19 +137,16 @@ export function PatchBayHero() {
                       <span className="font-display text-6xl font-black text-ink/25">IO</span>
                     </div>
                   )}
-                  {/* screen scanline sheen */}
+                  {/* monitor glass sheen */}
                   <div
-                    className="pointer-events-none absolute inset-0 opacity-30 mix-blend-overlay"
-                    style={{
-                      backgroundImage:
-                        'repeating-linear-gradient(0deg, rgb(255 255 255 / 0.08) 0 1px, transparent 1px 3px)',
-                    }}
+                    className="pointer-events-none absolute inset-0"
+                    style={{ background: 'linear-gradient(180deg, rgb(255 255 255 / 0.07), transparent 28%)' }}
                     aria-hidden
                   />
                 </div>
                 <div className="mt-2 flex items-center justify-between px-1 pb-0.5">
-                  <span className="silk text-muted/70">cam.01 · live</span>
-                  <span className="readout text-[0.62rem]">40.7128°N 74.0060°W</span>
+                  <span className="silk text-muted">cam.01 · live</span>
+                  <span className="readout text-[0.7rem]">40.7128°N 74.0060°W</span>
                 </div>
               </div>
             </div>
@@ -161,7 +158,7 @@ export function PatchBayHero() {
               <div className="flex items-center gap-6">
                 <Jack label="SRC" sub="input" lit anchorRef={inputRef} tone="amber" />
                 <div className="hidden flex-col gap-1 sm:flex">
-                  <span className="silk text-muted/70">signal</span>
+                  <span className="silk text-muted">signal</span>
                   <span className="readout">patch ▸ output to view work</span>
                 </div>
               </div>

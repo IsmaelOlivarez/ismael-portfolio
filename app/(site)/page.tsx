@@ -87,7 +87,7 @@ export default function HomePage() {
                     {post.title}
                   </h3>
                   <p className="mt-2 max-w-2xl leading-relaxed text-muted">{post.description}</p>
-                  <span className="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-wider text-accent">
+                  <span className="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.7rem] uppercase tracking-wider text-accent">
                     Read
                     <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </span>
@@ -126,12 +126,12 @@ export default function HomePage() {
               <div className="flex items-center gap-4">
                 <div className="flex flex-col items-center gap-2">
                   <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-panel">
-                    <span className="h-4 w-4 rounded-full bg-bg ring-2 ring-accent/60" aria-hidden />
                     <span
-                      className="absolute inset-0 rounded-full animate-led-breathe"
-                      style={{ boxShadow: '0 0 14px 1px rgb(var(--c-accent) / 0.5)' }}
+                      className="pointer-events-none absolute -inset-2 animate-led-breathe"
+                      style={{ background: 'radial-gradient(circle, rgb(var(--c-accent) / 0.4), transparent 68%)' }}
                       aria-hidden
                     />
+                    <span className="relative h-4 w-4 rounded-full bg-bg ring-2 ring-accent/60" aria-hidden />
                   </span>
                   <span className="silk">main out</span>
                 </div>

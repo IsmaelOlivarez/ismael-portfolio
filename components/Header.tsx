@@ -34,7 +34,7 @@ export function Header() {
             <span className="font-display text-base font-bold tracking-tight text-ink transition-colors group-hover:text-accent">
               Ismael&nbsp;Olivarez
             </span>
-            <span className="hidden font-mono text-[0.6rem] uppercase tracking-eyebrow text-muted sm:inline">
+            <span className="hidden font-mono text-[0.7rem] uppercase tracking-eyebrow text-muted sm:inline">
               SWE
             </span>
           </span>

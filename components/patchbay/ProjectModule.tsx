@@ -33,14 +33,18 @@ export function ProjectModule({
       {/* module header */}
       <div className="flex items-center justify-between">
         <span className="silk silk-accent">mod {id}</span>
-        <span
-          className="h-2 w-2 rounded-full transition-all"
-          style={{
-            backgroundColor: on ? 'rgb(var(--c-accent))' : 'rgb(var(--c-metal) / 0.4)',
-            boxShadow: on ? '0 0 8px 1px rgb(var(--c-accent) / 0.7)' : 'none',
-          }}
-          aria-hidden
-        />
+        <span className="relative inline-flex h-2 w-2 items-center justify-center" aria-hidden>
+          {on && (
+            <span
+              className="pointer-events-none absolute -inset-1.5"
+              style={{ background: 'radial-gradient(circle, rgb(var(--c-accent) / 0.55), transparent 70%)' }}
+            />
+          )}
+          <span
+            className="relative h-2 w-2 rounded-full transition-colors"
+            style={{ backgroundColor: on ? 'rgb(var(--c-accent))' : 'rgb(var(--c-metal) / 0.4)' }}
+          />
+        </span>
       </div>
 
       {/* internal patch cable IN -> OUT */}
@@ -101,8 +105,8 @@ export function ProjectModule({
 
       {/* footer */}
       <div className="mt-5 flex items-center justify-between border-t border-line pt-3">
-        <span className="readout text-[0.62rem]">{project.timeline}</span>
-        <span className="inline-flex items-center gap-1 font-mono text-[0.68rem] uppercase tracking-wider text-accent">
+        <span className="readout text-[0.7rem]">{project.timeline}</span>
+        <span className="inline-flex items-center gap-1 font-mono text-[0.7rem] uppercase tracking-wider text-accent">
           patch
           <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>

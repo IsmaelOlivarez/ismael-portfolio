@@ -27,7 +27,7 @@ export function Footer() {
           <div className="flex items-center gap-3">
             <Screw />
             <span className="silk silk-ink">IO</span>
-            <span className="silk text-muted/70">sys.portfolio</span>
+            <span className="silk text-muted">sys.portfolio</span>
           </div>
           <Screw />
         </div>
@@ -35,7 +35,7 @@ export function Footer() {
         <div className="flex flex-col justify-between gap-10 md:flex-row md:items-start">
           <div className="max-w-sm">
             <p className="font-display text-2xl font-semibold text-ink">{siteConfig.name}</p>
-            <p className="mt-3 leading-relaxed text-muted">
+            <p className="mt-3 text-pretty leading-relaxed text-muted">
               Building scalable backend systems &amp; thoughtful applications.
             </p>
           </div>

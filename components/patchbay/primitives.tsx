@@ -1,9 +1,14 @@
 import { clsx } from 'clsx'
+import type { CSSProperties } from 'react'
 
 /* ============================================================
    Panel hardware primitives for the Patch Bay world.
    All presentational: SVG shapes + CSS ambient motion only.
    ============================================================ */
+
+/** Round trig-derived coords to a fixed precision so server and client
+ *  serialize byte-identical SVG (avoids React hydration mismatches). */
+const r3 = (n: number) => Math.round(n * 1000) / 1000
 
 /** A rack-ear screw head. */
 export function Screw({ className }: { className?: string }) {
@@ -52,16 +57,16 @@ export function Jack({
         </svg>
         {lit && (
           <span
-            className="pointer-events-none absolute inset-0 rounded-full animate-led-breathe"
-            style={{ boxShadow: `0 0 14px 1px rgb(${toneVar} / 0.55)` }}
+            className="pointer-events-none absolute -inset-2 animate-led-breathe"
+            style={{ background: `radial-gradient(circle, rgb(${toneVar} / 0.45), transparent 68%)` }}
             aria-hidden
           />
         )}
       </span>
       {label && (
-        <span className="silk text-center leading-none">
+        <span className="silk text-center leading-tight">
           {label}
-          {sub && <span className="block text-[0.5rem] text-muted/70">{sub}</span>}
+          {sub && <span className="block text-muted">{sub}</span>}
         </span>
       )}
     </span>
@@ -94,10 +99,10 @@ export function Knob({
             return (
               <line
                 key={i}
-                x1={22 + Math.sin(a) * r1}
-                y1={22 - Math.cos(a) * r1}
-                x2={22 + Math.sin(a) * r2}
-                y2={22 - Math.cos(a) * r2}
+                x1={r3(22 + Math.sin(a) * r1)}
+                y1={r3(22 - Math.cos(a) * r1)}
+                x2={r3(22 + Math.sin(a) * r2)}
+                y2={r3(22 - Math.cos(a) * r2)}
                 stroke="rgb(var(--c-metal) / 0.4)"
                 strokeWidth="1"
                 strokeLinecap="round"
@@ -108,10 +113,15 @@ export function Knob({
           <circle cx="22" cy="22" r="15" fill="rgb(var(--c-panel))" stroke="rgb(var(--c-line))" />
           <circle cx="22" cy="22" r="15" fill="none" stroke="rgb(255 255 255 / 0.07)" strokeWidth="0.75" />
           <circle cx="22" cy="18.5" r="9" fill="rgb(255 255 255 / 0.03)" />
-          {/* indicator */}
+          {/* indicator — points at `value`; when drifting it sways AROUND that
+              angle via the --knob-a custom property (no competing transform). */}
           <g
             className={drift ? 'knob-drift' : undefined}
-            style={{ transformOrigin: '22px 22px', transform: `rotate(${angle}deg)` }}
+            style={
+              drift
+                ? ({ transformOrigin: '22px 22px', '--knob-a': `${angle}deg` } as CSSProperties)
+                : { transformOrigin: '22px 22px', transform: `rotate(${angle}deg)` }
+            }
           >
             <line x1="22" y1="22" x2="22" y2="9" stroke="rgb(var(--c-accent))" strokeWidth="2" strokeLinecap="round" />
           </g>
@@ -132,19 +142,20 @@ export function StatusLed({
   on?: boolean
   tone?: 'amber' | 'cyan' | 'green'
 }) {
-  const color =
-    tone === 'cyan' ? 'var(--c-patch)' : tone === 'green' ? '73 224 122' : 'var(--c-accent)'
   const rgb = tone === 'green' ? '73 224 122' : tone === 'cyan' ? 'var(--c-patch)' : 'var(--c-accent)'
   return (
     <span className="inline-flex items-center gap-2">
-      <span className="relative inline-flex h-2.5 w-2.5">
+      <span className="relative inline-flex h-2.5 w-2.5 items-center justify-center">
+        {on && (
+          <span
+            className="pointer-events-none absolute -inset-1.5 animate-led-breathe"
+            style={{ background: `radial-gradient(circle, rgb(${rgb} / 0.6), transparent 70%)` }}
+            aria-hidden
+          />
+        )}
         <span
-          className={clsx('inline-flex h-2.5 w-2.5 rounded-full', on && 'animate-led-breathe')}
-          style={{
-            backgroundColor: `rgb(${rgb})`,
-            boxShadow: on ? `0 0 8px 1px rgb(${rgb} / 0.7)` : 'none',
-            opacity: on ? 1 : 0.3,
-          }}
+          className="relative h-2.5 w-2.5 rounded-full"
+          style={{ backgroundColor: `rgb(${rgb})`, opacity: on ? 1 : 0.3 }}
         />
       </span>
       <span className="silk silk-ink">{label}</span>
@@ -170,10 +181,10 @@ export function VuMeter({ label = 'LEVEL', className }: { label?: string; classN
             return (
               <line
                 key={i}
-                x1={cx + Math.sin(a) * r1}
-                y1={cy - Math.cos(a) * r1}
-                x2={cx + Math.sin(a) * r2}
-                y2={cy - Math.cos(a) * r2}
+                x1={r3(cx + Math.sin(a) * r1)}
+                y1={r3(cy - Math.cos(a) * r1)}
+                x2={r3(cx + Math.sin(a) * r2)}
+                y2={r3(cy - Math.cos(a) * r2)}
                 stroke={hot ? 'rgb(var(--c-accent))' : 'rgb(var(--c-metal) / 0.6)'}
                 strokeWidth="1.3"
               />
