@@ -3,31 +3,40 @@
 @tailwind utilities;
 
 /* ============================================================
-   Editorial palette — dark-first. Values are RGB channels so
-   Tailwind's `/opacity` modifiers work (rgb(var(--x) / <a>)).
+   THE PATCH BAY — a modular signal rack in a dark studio.
+   Values are RGB channels so Tailwind's `/opacity` modifiers
+   work: rgb(var(--x) / <alpha>).
    ============================================================ */
 @layer base {
   :root,
   .dark {
-    --c-bg: 9 13 20;         /* #090D14 ink-navy black   */
-    --c-surface: 16 22 33;   /* #101621 lifted panel     */
-    --c-ink: 226 233 241;    /* #E2E9F1 cool off-white   */
-    --c-muted: 130 145 163;  /* #8291A3 cool gray        */
-    --c-line: 28 38 52;      /* #1C2634 blueprint line   */
-    --c-accent: 122 209 210; /* #7AD1D2 brighter aqua-cyan */
-    --c-accent-soft: 166 228 229;
-    --c-accent-ink: 9 13 20;
+    --c-bg: 14 15 18;          /* #0E0F12 studio room        */
+    --c-surface: 27 30 35;     /* #1B1E23 panel face         */
+    --c-panel: 35 39 45;       /* #23272D lifted module      */
+    --c-ink: 232 228 216;      /* #E8E4D8 bone legend text   */
+    --c-muted: 154 160 168;    /* #9AA0A8 dim panel legend   */
+    --c-line: 52 58 66;        /* #343A42 engraved seam      */
+    --c-metal: 155 163 173;    /* #9BA3AD brushed aluminium  */
+    --c-accent: 242 163 60;    /* #F2A33C signal amber       */
+    --c-accent-soft: 247 192 121;
+    --c-accent-ink: 26 18 5;   /* #1A1205 text on amber      */
+    --c-patch: 63 182 201;     /* #3FB6C9 patch cyan         */
+
+    --font-body: var(--font-display);
   }
 
   .light {
-    --c-bg: 242 246 250;     /* #F2F6FA cool paper       */
-    --c-surface: 255 255 255;
-    --c-ink: 12 18 27;       /* #0C121B ink-navy         */
-    --c-muted: 82 95 114;    /* #525F72                  */
-    --c-line: 208 218 229;   /* #D0DAE5 blueprint line   */
-    --c-accent: 21 118 130;  /* #157682 deeper teal      */
-    --c-accent-soft: 16 92 103;
-    --c-accent-ink: 242 246 250;
+    --c-bg: 214 217 223;       /* #D6D9DF daylight bench      */
+    --c-surface: 235 237 241;  /* #EBEDF1 light panel         */
+    --c-panel: 245 246 249;    /* #F5F6F9 lifted module       */
+    --c-ink: 24 27 32;         /* #181B20 ink legend          */
+    --c-muted: 88 95 105;      /* #585F69                     */
+    --c-line: 183 189 198;     /* #B7BDC6 seam                */
+    --c-metal: 130 138 148;    /* #828A94                     */
+    --c-accent: 183 106 18;    /* #B76A12 deeper amber        */
+    --c-accent-soft: 206 128 34;
+    --c-accent-ink: 255 251 244;
+    --c-patch: 24 128 145;     /* #188091                     */
   }
 }
 
@@ -43,18 +52,32 @@
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
 
+  /* Browser surfaces themed from the panel palette (craft floor). */
   ::selection {
-    background-color: rgb(var(--c-accent) / 0.28);
+    background-color: rgb(var(--c-accent) / 0.30);
     color: rgb(var(--c-ink));
   }
-
-  /* Space Grotesk display: tighten tracking slightly for headings */
-  .font-display {
-    letter-spacing: -0.01em;
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--c-bg));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--c-line));
+    border: 3px solid rgb(var(--c-bg));
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--c-metal) / 0.7);
+  }
+  * {
+    scrollbar-color: rgb(var(--c-line)) rgb(var(--c-bg));
   }
 
   .skip-link {
-    @apply absolute -top-12 left-6 z-50 rounded-md bg-accent px-4 py-2 text-accent-ink transition-transform duration-200;
+    @apply absolute -top-12 left-6 z-50 rounded bg-accent px-4 py-2 font-mono text-xs uppercase tracking-wider text-accent-ink transition-transform duration-200;
   }
   .skip-link:focus {
     @apply top-6;
@@ -68,67 +91,114 @@
 }
 
 /* ============================================================
-   Editorial component vocabulary
+   Panel component vocabulary
    ============================================================ */
 @layer components {
-  /* Uppercase letter-spaced label with a leading accent tick */
-  .eyebrow {
-    @apply inline-flex items-center gap-3 font-mono text-xs uppercase tracking-eyebrow text-muted;
+  /* A rack module: brushed-aluminium face, engraved seam, inner bevel. */
+  .panel {
+    position: relative;
+    background-color: rgb(var(--c-surface));
+    background-image:
+      linear-gradient(180deg, rgb(255 255 255 / 0.03), transparent 42%),
+      repeating-linear-gradient(
+        90deg,
+        rgb(255 255 255 / 0.015) 0 1px,
+        transparent 1px 3px
+      );
+    border: 1px solid rgb(var(--c-line));
+    border-radius: 8px;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      inset 0 -1px 0 rgb(0 0 0 / 0.35),
+      0 14px 34px -22px rgb(0 0 0 / 0.75);
   }
-  .eyebrow::before {
-    content: "";
-    @apply inline-block h-px w-8 bg-accent;
+  .panel-raised {
+    background-color: rgb(var(--c-panel));
   }
 
-  /* Oversized faint serif section index, e.g. "01" */
-  .section-index {
-    @apply font-display text-sm font-medium text-accent;
+  /* Silkscreen label: small, tracked, uppercase panel legend. */
+  .silk {
+    @apply font-mono text-[0.62rem] uppercase text-muted;
+    letter-spacing: 0.18em;
+  }
+  .silk-ink {
+    color: rgb(var(--c-ink) / 0.85);
+  }
+  .silk-accent {
+    color: rgb(var(--c-accent));
+  }
+
+  /* Instrument readout row (legit mono use: levels, logs, coordinates). */
+  .readout {
+    @apply font-mono text-xs text-muted;
     font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
   }
 
-  .hairline {
-    @apply border-0 border-t border-line;
+  /* Engraved rack rule. */
+  .rule {
+    @apply border-0 border-t;
+    border-color: rgb(var(--c-line));
   }
 
-  /* Buttons — mono, letter-spaced, technical-editorial */
+  /* Controls — a jack is a physical output; the primary action is a jack
+     you patch into, not a floating pill. */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full font-mono text-xs uppercase tracking-[0.14em] transition-all duration-200 focus-visible:outline-none;
-    padding: 0.8rem 1.4rem;
+    @apply inline-flex items-center justify-center gap-2 font-mono text-xs uppercase transition-all duration-200 focus-visible:outline-none;
+    letter-spacing: 0.14em;
+    border-radius: 6px;
+    padding: 0.8rem 1.3rem;
   }
   .btn-primary {
-    @apply btn bg-accent text-accent-ink hover:bg-accent-soft;
+    background-color: rgb(var(--c-accent));
+    color: rgb(var(--c-accent-ink));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.4),
+      0 10px 22px -14px rgb(var(--c-accent) / 0.9);
+  }
+  .btn-primary:hover {
+    background-color: rgb(var(--c-accent-soft));
   }
   .btn-secondary {
-    @apply btn border border-line text-ink hover:border-ink;
+    background-color: rgb(var(--c-panel));
+    color: rgb(var(--c-ink));
+    border: 1px solid rgb(var(--c-line));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05);
+  }
+  .btn-secondary:hover {
+    border-color: rgb(var(--c-metal) / 0.8);
   }
 
-  /* Inline text link with animated underline */
+  /* Inline text link with a signal underline. */
   .link-line {
-    @apply relative font-medium text-accent transition-colors;
+    @apply relative font-medium transition-colors;
+    color: rgb(var(--c-accent));
     background-image: linear-gradient(rgb(var(--c-accent)), rgb(var(--c-accent)));
     background-position: 0 100%;
     background-repeat: no-repeat;
-    background-size: 0% 1px;
+    background-size: 0% 1.5px;
     transition: background-size 0.3s ease;
     padding-bottom: 1px;
   }
   .link-line:hover {
-    background-size: 100% 1px;
+    background-size: 100% 1.5px;
   }
 
   .card {
-    @apply rounded-xl border border-line bg-surface transition-colors duration-300;
+    @apply panel;
   }
 
   .chip {
-    @apply inline-flex items-center rounded-full border border-line px-3 py-1 font-mono text-[0.68rem] uppercase tracking-wider text-muted;
+    @apply inline-flex items-center gap-1.5 rounded border px-2.5 py-1 font-mono text-[0.66rem] uppercase text-muted;
+    border-color: rgb(var(--c-line));
+    letter-spacing: 0.08em;
   }
 
   .section-padding {
     @apply px-5 py-20 sm:px-8 md:py-28 lg:px-10;
   }
 
-  /* Theme-aware long-form prose (Tailwind Typography variables) */
+  /* Long-form prose tuned to the panel palette. */
   .prose-blueprint {
     --tw-prose-body: rgb(var(--c-ink) / 0.9);
     --tw-prose-headings: rgb(var(--c-ink));
@@ -149,7 +219,7 @@
   }
   .prose-blueprint :where(h1, h2, h3, h4) {
     font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
   .prose-blueprint :where(code):not(pre code)::before,
   .prose-blueprint :where(code):not(pre code)::after {
@@ -161,6 +231,22 @@
     padding: 0.1rem 0.35rem;
     font-size: 0.85em;
   }
+
+  /* Legacy editorial classes kept alive (remapped) so pages not yet
+     migrated to the Patch Bay world still render coherently. */
+  .eyebrow {
+    @apply inline-flex items-center gap-3 font-mono text-xs uppercase text-muted;
+    letter-spacing: 0.22em;
+  }
+  .section-index {
+    @apply font-mono text-sm font-medium;
+    color: rgb(var(--c-accent));
+    font-variant-numeric: tabular-nums;
+  }
+  .hairline {
+    @apply border-0 border-t;
+    border-color: rgb(var(--c-line));
+  }
 }
 
 @layer utilities {
@@ -170,17 +256,36 @@
   .text-pretty {
     text-wrap: pretty;
   }
-  /* Blueprint graph paper — fine minor lines + heavier major lines */
-  .bg-grid {
+
+  /* Brushed-aluminium material wash for large panel grounds. */
+  .brushed {
     background-image:
-      linear-gradient(to right, rgb(var(--c-line) / 0.6) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--c-line) / 0.6) 1px, transparent 1px),
-      linear-gradient(to right, rgb(var(--c-line) / 0.32) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--c-line) / 0.32) 1px, transparent 1px);
-    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+      linear-gradient(180deg, rgb(255 255 255 / 0.04), transparent 30%),
+      repeating-linear-gradient(
+        90deg,
+        rgb(255 255 255 / 0.018) 0 1px,
+        rgb(0 0 0 / 0.02) 1px 2px
+      );
   }
 
-  /* Registration corner ticks (blueprint drawing frame) */
+  /* The studio room: a faint vignette so the rack sits in space. */
+  .studio {
+    background:
+      radial-gradient(
+        120% 90% at 50% -10%,
+        rgb(var(--c-metal) / 0.08),
+        transparent 55%
+      ),
+      rgb(var(--c-bg));
+  }
+
+  /* Legacy decorative utilities (kept remapped for un-migrated pages). */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(var(--c-line) / 0.5) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--c-line) / 0.5) 1px, transparent 1px);
+    background-size: 28px 28px, 28px 28px;
+  }
   .tick-corners {
     position: relative;
   }
@@ -205,6 +310,15 @@
     border-bottom: 1px solid;
     border-right: 1px solid;
   }
+}
+
+/* Ambient panel life — bounded, and silenced for reduced-motion. */
+@keyframes led-breathe {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@keyframes signal-dash {
+  to { stroke-dashoffset: -32; }
 }
 
 @media (prefers-reduced-motion: reduce) {

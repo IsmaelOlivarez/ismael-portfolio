@@ -13,12 +13,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Editorial semantic palette (values live in globals.css)
+        // Patch Bay semantic palette (values live in globals.css)
         bg: withAlpha('--c-bg'),
         surface: withAlpha('--c-surface'),
+        panel: withAlpha('--c-panel'),
         ink: withAlpha('--c-ink'),
         muted: withAlpha('--c-muted'),
         line: withAlpha('--c-line'),
+        metal: withAlpha('--c-metal'),
+        patch: withAlpha('--c-patch'),
         accent: {
           DEFAULT: withAlpha('--c-accent'),
           soft: withAlpha('--c-accent-soft'),
@@ -44,6 +47,8 @@ const config: Config = {
       animation: {
         'fade-in': 'fadeIn 0.6s ease-in-out both',
         'rise': 'rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both',
+        'led-breathe': 'led-breathe 2.6s ease-in-out infinite',
+        'signal-dash': 'signal-dash 0.9s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -53,6 +58,13 @@ const config: Config = {
         rise: {
           '0%': { transform: 'translateY(18px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        'led-breathe': {
+          '0%, 100%': { opacity: '0.55' },
+          '50%': { opacity: '1' },
+        },
+        'signal-dash': {
+          to: { strokeDashoffset: '-32' },
         },
       },
     },

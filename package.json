@@ -20,6 +20,7 @@
     "date-fns": "^3.0.6",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.303.0",
+    "motion": "^14.14.0",
     "next": "^15.5.26",
     "nodemailer": "^6.9.7",
     "postcss": "^8.4.32",
