@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-25T00:00:00Z",
+  "title": "Design System: The Patch Bay",
+  "extensions": {
+    "colorMeta": {
+      "bg": { "role": "neutral", "displayName": "Studio Room", "canonical": "#121316", "tonalRamp": ["#0A0B0D", "#121316", "#1B1E23", "#23272D", "#343A42", "#5A626C", "#878F99", "#C3C8CF"] },
+      "surface": { "role": "neutral", "displayName": "Panel Face", "canonical": "#1B1E23", "tonalRamp": ["#0A0B0D", "#13151A", "#1B1E23", "#23272D", "#343A42", "#5A626C", "#878F99", "#C3C8CF"] },
+      "panel": { "role": "neutral", "displayName": "Lifted Module", "canonical": "#23272D", "tonalRamp": ["#0D0E11", "#15171B", "#1B1E23", "#23272D", "#343A42", "#5A626C", "#878F99", "#C3C8CF"] },
+      "ink": { "role": "neutral", "displayName": "Bone Legend", "canonical": "#E8E4D8", "tonalRamp": ["#2A2822", "#4A463C", "#6E695B", "#938D7C", "#B6B0A1", "#D2CDBE", "#E8E4D8", "#F5F2EA"] },
+      "muted": { "role": "neutral", "displayName": "Dim Legend", "canonical": "#9AA0A8", "tonalRamp": ["#2A2D31", "#3D4147", "#565B62", "#71767E", "#9AA0A8", "#B4B9BF", "#CDD1D6", "#E6E8EB"] },
+      "line": { "role": "neutral", "displayName": "Engraved Seam", "canonical": "#343A42", "tonalRamp": ["#121316", "#1F2328", "#2A2F36", "#343A42", "#4A515B", "#656D78", "#8B929C", "#B7BDC6"] },
+      "metal": { "role": "neutral", "displayName": "Brushed Aluminium", "canonical": "#9BA3AD", "tonalRamp": ["#2B2F34", "#3F454C", "#585F68", "#737B85", "#9BA3AD", "#B4BBC3", "#CDD2D8", "#E6E9EC"] },
+      "accent": { "role": "primary", "displayName": "Signal Amber", "canonical": "#F2A33C", "tonalRamp": ["#3A2608", "#5E3E0E", "#8A5C16", "#B97E22", "#E09636", "#F2A33C", "#F7C079", "#FBE0BC"] },
+      "accent-soft": { "role": "primary", "displayName": "Signal Amber Soft", "canonical": "#F7C079", "tonalRamp": ["#3A2608", "#5E3E0E", "#8A5C16", "#B97E22", "#E09636", "#F2A33C", "#F7C079", "#FBE0BC"] },
+      "accent-ink": { "role": "primary", "displayName": "Amber Ink", "canonical": "#1A1205", "tonalRamp": ["#0A0702", "#1A1205", "#2E2109", "#48340F", "#6B4E18", "#926B22", "#C08F32", "#F2A33C"] },
+      "patch": { "role": "secondary", "displayName": "Patch Cyan", "canonical": "#3FB6C9", "tonalRamp": ["#082A30", "#0E4149", "#165E6A", "#227F8E", "#2E9DAF", "#3FB6C9", "#78CFDC", "#BCE7EE"] },
+      "led-green": { "role": "secondary", "displayName": "Status Green", "canonical": "#49E07A", "tonalRamp": ["#0A3018", "#10492A", "#176B3C", "#228F52", "#2EB368", "#49E07A", "#86EBA7", "#C2F5D2"] }
+    },
+    "typographyMeta": {
+      "brand": { "displayName": "Brand IO", "purpose": "The 900-weight module brand mark in the hero identity face only." },
+      "display": { "displayName": "Display", "purpose": "The name h1 and the large contact heading." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles." },
+      "title": { "displayName": "Title", "purpose": "Project-module and field-log entry titles." },
+      "body": { "displayName": "Body", "purpose": "Lead paragraphs and descriptions; max-width 68ch." },
+      "silk": { "displayName": "Silk Label", "purpose": "Silkscreen mono panel legends on every piece of hardware; 11.2px floor." },
+      "readout": { "displayName": "Readout", "purpose": "Instrument readouts — levels, coordinates, dates, log rows." }
+    },
+    "shadows": [
+      { "name": "panel-chrome", "value": "inset 0 1px 0 rgb(255 255 255 / 0.05), inset 0 -1px 0 rgb(0 0 0 / 0.35), 0 14px 34px -22px rgb(0 0 0 / 0.75)", "purpose": "The milled-face bevel + contact shadow on every .panel. Structural, not ambient." },
+      { "name": "button-primary-chrome", "value": "inset 0 1px 0 rgb(255 255 255 / 0.4), 0 10px 22px -14px rgb(var(--c-accent) / 0.9)", "purpose": "Bright inset top edge plus a short amber-tinted cast so the primary action sits proud." },
+      { "name": "led-emission", "value": "radial-gradient(circle, rgb(var(--tone) / 0.45-0.6), transparent 68-70%)", "purpose": "Not a box-shadow. A radial-gradient halo layered behind LEDs and lit jacks — the only way the world emits light." },
+      { "name": "pulse-ignite", "value": "drop-shadow(0 0 5px rgb(var(--tone) / 0.85))", "purpose": "Filter on the active cable's travelling signal pulse; brightness, not element glow." }
+    ],
+    "motion": [
+      { "name": "pointer-spring", "value": "stiffness 120, damping 18, mass 0.6", "purpose": "Spring smoothing on the shared cursor-reactive pointer so cables follow and settle, never snap." },
+      { "name": "signal-dash", "value": "signal-dash 0.9s linear infinite (stroke-dashoffset to -32)", "purpose": "The one continuous travelling pulse on the active patch cable." },
+      { "name": "led-breathe", "value": "led-breathe 2.6s ease-in-out infinite (opacity 0.55..1)", "purpose": "Ambient jack and status LED breathing." },
+      { "name": "vu-sway", "value": "vu-sway 7s ease-in-out infinite (rotate -16deg..18deg)", "purpose": "Ambient VU-meter needle drift, bounded." },
+      { "name": "knob-sway", "value": "knob-sway 6s ease-in-out infinite (rotate around --knob-a +5deg)", "purpose": "Optional ambient knob-indicator sway around its set value." },
+      { "name": "rise", "value": "rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both", "purpose": "Entrance lift for content." },
+      { "name": "reduced-motion-guard", "value": "@media (prefers-reduced-motion: reduce) flattens all animation/transition durations to 0.01ms", "purpose": "The world is fully reduced-motion-safe; cables drop cursor-follow and dash." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "container", "value": "72rem (max-w-6xl)" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The output at a cable terminus — the single unmistakable action per view.",
+      "html": "<button class=\"ds-btn-primary\">View Work <svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/><polyline points=\"12 5 19 12 12 19\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; background: var(--c-accent, #F2A33C); color: var(--c-accent-ink, #1A1205); font-family: 'Chivo Mono', ui-monospace, monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; padding: 0.8rem 1.3rem; border: none; border-radius: 6px; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.4), 0 10px 22px -14px rgb(242 163 60 / 0.9); transition: all 0.2s; cursor: pointer; } .ds-btn-primary:hover { background: #F7C079; } .ds-btn-primary:focus-visible { outline: 2px solid #F2A33C; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Lifted-panel action with an inset top sheen and engraved border.",
+      "html": "<button class=\"ds-btn-secondary\">Download Résumé</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; background: #23272D; color: #E8E4D8; font-family: 'Chivo Mono', ui-monospace, monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; padding: 0.8rem 1.3rem; border: 1px solid #343A42; border-radius: 6px; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05); transition: all 0.2s; cursor: pointer; } .ds-btn-secondary:hover { border-color: rgb(155 163 173 / 0.8); } .ds-btn-secondary:focus-visible { outline: 2px solid #F2A33C; outline-offset: 2px; }"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "A rack module: milled aluminium face with top sheen, engraved seam, inset bevel, and contact shadow.",
+      "html": "<div class=\"ds-panel\"><span class=\"ds-silk\">mod 01</span><h3 class=\"ds-panel-title\">Timeline</h3><p class=\"ds-panel-body\">Customizable social networking app with horizontal feed and post-creation engine.</p></div>",
+      "css": ".ds-panel { position: relative; background-color: #1B1E23; background-image: linear-gradient(180deg, rgb(255 255 255 / 0.035), transparent 46%); border: 1px solid #343A42; border-radius: 8px; box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.05), inset 0 -1px 0 rgb(0 0 0 / 0.35), 0 14px 34px -22px rgb(0 0 0 / 0.75); padding: 1.25rem; } .ds-silk { font-family: 'Chivo Mono', ui-monospace, monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.16em; color: #F2A33C; } .ds-panel-title { font-family: Archivo, ui-sans-serif, system-ui, sans-serif; font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; color: #E8E4D8; margin: 1rem 0 0; } .ds-panel-body { font-family: Archivo, ui-sans-serif, system-ui, sans-serif; font-size: 0.875rem; line-height: 1.6; color: #9AA0A8; margin: 0.5rem 0 0; }"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "A patch-label tag for project stacks; outline only, mono uppercase, non-interactive.",
+      "html": "<span class=\"ds-chip\">React Native</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 0.375rem; border: 1px solid #343A42; border-radius: 4px; padding: 0.25rem 0.625rem; font-family: 'Chivo Mono', ui-monospace, monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: #9AA0A8; }"
+    },
+    {
+      "name": "Status LED",
+      "kind": "custom",
+      "refersTo": "status-led",
+      "description": "A breathing status indicator — a dot plus a radial-gradient emission halo and a silk label. Emission is light, never box-shadow.",
+      "html": "<span class=\"ds-led\"><span class=\"ds-led-halo\"></span><span class=\"ds-led-dot\"></span><span class=\"ds-led-label\">Open to SWE roles</span></span>",
+      "css": ".ds-led { display: inline-flex; align-items: center; gap: 0.5rem; } .ds-led > .ds-led-dot, .ds-led > .ds-led-halo { position: relative; } .ds-led-halo { position: absolute; width: 1.25rem; height: 1.25rem; margin-left: -0.375rem; border-radius: 999px; background: radial-gradient(circle, rgb(242 163 60 / 0.6), transparent 70%); animation: ds-led-breathe 2.6s ease-in-out infinite; } .ds-led-dot { width: 0.625rem; height: 0.625rem; border-radius: 999px; background: #F2A33C; } .ds-led-label { font-family: 'Chivo Mono', ui-monospace, monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgb(232 228 216 / 0.85); } @keyframes ds-led-breathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } } @media (prefers-reduced-motion: reduce) { .ds-led-halo { animation: none; } }"
+    },
+    {
+      "name": "Jack",
+      "kind": "custom",
+      "refersTo": "jack",
+      "description": "A 1/4\" patch jack socket with a metal collar; its collar and LED light and a radial halo breathes when live. Cable anchor point.",
+      "html": "<span class=\"ds-jack\"><svg viewBox=\"0 0 36 36\" width=\"36\" height=\"36\" aria-hidden><circle cx=\"18\" cy=\"18\" r=\"16\" fill=\"#23272D\" stroke=\"#343A42\"/><circle cx=\"18\" cy=\"18\" r=\"11\" fill=\"rgb(155 163 173 / 0.22)\" stroke=\"rgb(0 0 0 / 0.4)\"/><circle cx=\"18\" cy=\"18\" r=\"6\" fill=\"rgb(8 9 11)\"/><circle cx=\"18\" cy=\"18\" r=\"6\" fill=\"none\" stroke=\"rgb(242 163 60 / 0.9)\" stroke-width=\"1.5\"/><circle cx=\"18\" cy=\"18\" r=\"2.4\" fill=\"#F2A33C\"/></svg><span class=\"ds-jack-label\">SRC</span></span>",
+      "css": ".ds-jack { display: inline-flex; flex-direction: column; align-items: center; gap: 0.375rem; } .ds-jack-label { font-family: 'Chivo Mono', ui-monospace, monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.16em; color: #9AA0A8; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Mono uppercase header nav link led by a dot that lights amber on hover.",
+      "html": "<a class=\"ds-nav-link\" href=\"#\"><span class=\"ds-nav-dot\"></span>Work</a>",
+      "css": ".ds-nav-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Chivo Mono', ui-monospace, monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.16em; color: #9AA0A8; text-decoration: none; transition: color 0.2s; } .ds-nav-dot { width: 0.375rem; height: 0.375rem; border-radius: 999px; background: #343A42; transition: background 0.2s; } .ds-nav-link:hover { color: #E8E4D8; } .ds-nav-link:hover .ds-nav-dot { background: #F2A33C; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Patch Bay",
+    "overview": "The portfolio is a modular signal rack sitting in a dark studio room. Every surface is a brushed-aluminium front panel bolted into a rack: silkscreen legends, engraved seams, rack-ear screws, jacks, knobs, VU meters, and rubber patch cables carrying signal from input to output. The work is not described as a system — it is shown as one, hardware a visitor can trace signal through. The mood is engineered, tactile, and quietly powered-on. Depth is physical — every panel reads as a milled metal face catching a single top light, never a floating card with a drop shadow. Color is almost entirely neutral graphite and bone; the signal-amber accent is rationed so that when it appears it reads as live current, not decoration. Motion is the physics of real hardware: damped springs that settle rather than snap, one continuous signal pulse on the active patch, and ambient life from breathing jack LEDs and drifting VU needles. The default and canonical theme is dark; a light theme exists and re-derives every token, but the dark palette is the source of truth.",
+    "keyCharacteristics": [
+      "Brushed-metal panels with engraved seams and inset bevels — never flat floating cards.",
+      "Silkscreen mono legends and instrument readouts label everything, like a real rack.",
+      "One rationed signal color (amber) marks what is live; patch-cyan is the resting signal.",
+      "Hardware primitives (jacks, knobs, VU meters, patch cables) stand in for stock UI.",
+      "Motion settles like real analog parts; emission is radial-gradient light, never box-shadow glow."
+    ],
+    "rules": [
+      { "name": "The Live-Current Rule", "body": "Amber marks only what is live: the primary action, a lit jack, the active cable, an ignited module. If more than a small fraction of a view is amber, something inert has been wrongly energized. Everything at rest is graphite, bone, and — for dormant signal — cyan.", "section": "colors" },
+      { "name": "The Channel-Native Color Rule", "body": "Values are authored as space-separated RGB channels in CSS variables (--c-accent: 242 163 60) so Tailwind opacity modifiers compose. Consume colors through the semantic tokens, never as raw hex in components.", "section": "colors" },
+      { "name": "The Mono-Is-Instrumentation Rule", "body": "Chivo Mono is for machine-labeling only: silkscreen legends, readouts, levels, coordinates, timestamps, button and nav labels. It never sets prose.", "section": "typography" },
+      { "name": "The Legible-Floor Rule", "body": "Functional text never drops below 11px. Silk labels and chips sit at the 0.7rem (11.2px) floor; nothing smaller ships.", "section": "typography" },
+      { "name": "The Emission-Not-Glow Rule", "body": "LEDs, lit jacks, and active emphasis emit light via a radial-gradient halo layered behind the element, never a box-shadow glow. Box-shadow is reserved for structural bevels and contact shadows; signal brightness on the active cable comes from a drop-shadow filter on the pulse stroke.", "section": "elevation" },
+      { "name": "The Milled-Face Rule", "body": "Every container is a milled panel: 1px line border, 8px radius, inset bevel. Surfaces are never borderless floating cards and never carry a soft ambient drop shadow as their resting state.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do build every container as a milled panel: 1px line seam, 8px radius, inset bevel; reach for .panel / .panel-raised.",
+      "Do ration amber to live current — the primary action, lit jacks, the active cable, an ignited module (The Live-Current Rule).",
+      "Do label hardware with mono silk legends and readouts; keep Archivo for prose (The Mono-Is-Instrumentation Rule).",
+      "Do emit light with radial-gradient halos and pulse drop-shadows; keep box-shadow for bevels and contact shadows (The Emission-Not-Glow Rule).",
+      "Do let moving parts settle with spring physics, and guard every animation behind prefers-reduced-motion.",
+      "Do keep chrome integer-aligned and functional text at or above 11px (The Legible-Floor Rule).",
+      "Do use patch-cyan for dormant signal and amber for the ignited/active state."
+    ],
+    "donts": [
+      "Don't render stock floating cards or buttons with soft ambient drop shadows — the material is milled metal, not paper.",
+      "Don't spread amber across inert chrome; if most of a view is amber, something inert was wrongly energized.",
+      "Don't set prose or headings in Chivo Mono, and don't label hardware in Archivo.",
+      "Don't fake LED or active glow with box-shadow; use a radial-gradient emission layer.",
+      "Don't let any moving part snap; and never ship motion that ignores prefers-reduced-motion.",
+      "Don't drop functional text below 11px or let panel chrome fall off integer pixel alignment."
+    ]
+  }
+}
