@@ -25,7 +25,7 @@ export default function HomePage() {
       {/* ===== Selected work ===== */}
       <section
         id="work"
-        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-center"
+        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-start lg:pt-16"
       >
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Selected work" link={{ href: '/projects', label: 'All projects' }} />
@@ -40,7 +40,7 @@ export default function HomePage() {
       {/* ===== Toolkit ===== */}
       <section
         id="toolkit"
-        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-center"
+        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-start lg:pt-16"
       >
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Toolkit" />
@@ -67,7 +67,7 @@ export default function HomePage() {
       {/* ===== Writing ===== */}
       <section
         id="writing"
-        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-center"
+        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-start lg:pt-16"
       >
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Writing" link={{ href: '/blog', label: 'All notes' }} />
@@ -98,7 +98,7 @@ export default function HomePage() {
       {/* ===== Contact ===== */}
       <section
         id="contact"
-        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-center"
+        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-start lg:pt-16"
       >
         <div className="mx-auto max-w-6xl">
           <h2 className="max-w-3xl text-balance font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl">

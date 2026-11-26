@@ -16,7 +16,7 @@ export function Hero() {
   return (
     <section id="top" className="snap-section relative">
       <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
-        <div className="grid min-h-screen items-center gap-14 py-20 lg:grid-cols-12 lg:gap-10">
+        <div className="grid min-h-[calc(100svh-4rem)] items-center gap-14 py-16 lg:grid-cols-12 lg:gap-10">
           {/* ---- identity ---- */}
           <div className="lg:col-span-7">
             <h1 className="animate-rise font-display text-[clamp(2.9rem,8.5vw,5.75rem)] font-semibold leading-[0.92] tracking-tight text-ink">
