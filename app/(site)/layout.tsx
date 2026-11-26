@@ -4,6 +4,7 @@ import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { ScrollShapes } from '@/components/ScrollShapes'
 import { generateSEO } from '@/lib/seo'
 
 // Panel / display + body voice: Archivo, an industrial grotesque with a wide
@@ -50,7 +51,8 @@ export default function RootLayout({
       </head>
       <body className={`${archivo.variable} ${chivoMono.variable} font-body antialiased`}>
         <ThemeProvider>
-          <div className="relative flex min-h-screen flex-col bg-bg text-ink">
+          <ScrollShapes />
+          <div className="relative flex min-h-screen flex-col text-ink">
             <a href="#main-content" className="skip-link">
               Skip to main content
             </a>

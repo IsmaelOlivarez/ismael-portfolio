@@ -1,29 +1,19 @@
 interface PageHeaderProps {
-  index: string
-  kicker: string
+  /** Legacy props kept for call-site compatibility; not rendered as a kicker. */
+  index?: string
+  kicker?: string
   title: string
   lead?: string
   spec?: string
 }
 
-/** Consistent blueprint-style page header with spec strip + serif title. */
-export function PageHeader({ index, kicker, title, lead, spec }: PageHeaderProps) {
+/** Minimal page header: the title leads, a quiet meta line follows. */
+export function PageHeader({ title, lead, spec }: PageHeaderProps) {
   return (
-    <section className="relative overflow-hidden border-b border-line">
-      <div className="bg-grid pointer-events-none absolute inset-0 opacity-50 [mask-image:radial-gradient(120%_100%_at_top_left,black,transparent_65%)]" />
-      <div className="relative mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
-        <div className="flex items-center justify-between gap-4 border-b border-line py-3 font-mono text-[0.6rem] uppercase tracking-eyebrow text-muted">
-          <span className="text-ink">
-            IO<span className="text-muted"> — sys.portfolio</span>
-          </span>
-          {spec && <span className="hidden md:inline">{spec}</span>}
-          <span>Est. 2025</span>
-        </div>
-        <div className="max-w-3xl py-16 md:py-24">
-          <p className="eyebrow">
-            [{index}] {kicker}
-          </p>
-          <h1 className="mt-6 font-display text-5xl leading-[0.95] tracking-tight text-ink sm:text-6xl">
+    <section className="relative border-b border-line">
+      <div className="mx-auto max-w-6xl px-5 pb-16 pt-20 sm:px-8 md:pb-20 md:pt-28 lg:px-10">
+        <div className="max-w-3xl">
+          <h1 className="font-display text-5xl font-semibold leading-[0.95] tracking-tight text-ink sm:text-6xl">
             {title}
           </h1>
           {lead && (
@@ -31,6 +21,7 @@ export function PageHeader({ index, kicker, title, lead, spec }: PageHeaderProps
               {lead}
             </p>
           )}
+          {spec && <p className="mt-6 text-sm text-muted">{spec}</p>}
         </div>
       </div>
     </section>
