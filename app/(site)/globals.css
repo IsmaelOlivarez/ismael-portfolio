@@ -3,31 +3,44 @@
 @tailwind utilities;
 
 /* ============================================================
-   Editorial palette — dark-first. Values are RGB channels so
-   Tailwind's `/opacity` modifiers work (rgb(var(--x) / <a>)).
+   Minimal dark. A near-black canvas, soft off-white type, and
+   one restrained cool accent. Thin line-work lives in the
+   background (see ScrollShapes); the UI stays quiet.
+   Values are RGB channels so `/opacity` modifiers work.
    ============================================================ */
 @layer base {
   :root,
   .dark {
-    --c-bg: 9 13 20;         /* #090D14 ink-navy black   */
-    --c-surface: 16 22 33;   /* #101621 lifted panel     */
-    --c-ink: 226 233 241;    /* #E2E9F1 cool off-white   */
-    --c-muted: 130 145 163;  /* #8291A3 cool gray        */
-    --c-line: 28 38 52;      /* #1C2634 blueprint line   */
-    --c-accent: 143 200 205; /* #8FC8CD soft pastel cyan */
-    --c-accent-soft: 179 221 224;
-    --c-accent-ink: 9 13 20;
+    --c-bg: 11 12 14;          /* #0B0C0E near-black        */
+    --c-surface: 19 20 24;     /* #131418 faint lift        */
+    --c-ink: 236 237 239;      /* #ECEDEF soft off-white    */
+    --c-muted: 141 146 155;    /* #8D929B cool gray         */
+    --c-line: 36 38 44;        /* #24262C hairline          */
+    --c-accent: 144 168 208;   /* #90A8D0 soft steel blue   */
+    --c-accent-soft: 180 197 226;
+    --c-accent-ink: 11 12 14;
+
+    /* back-compat aliases for any not-yet-migrated class */
+    --c-panel: 19 20 24;
+    --c-metal: 141 146 155;
+    --c-patch: 144 168 208;
+
+    --font-body: var(--font-display);
   }
 
   .light {
-    --c-bg: 242 246 250;     /* #F2F6FA cool paper       */
+    --c-bg: 246 247 249;       /* #F6F7F9 paper             */
     --c-surface: 255 255 255;
-    --c-ink: 12 18 27;       /* #0C121B ink-navy         */
-    --c-muted: 82 95 114;    /* #525F72                  */
-    --c-line: 208 218 229;   /* #D0DAE5 blueprint line   */
-    --c-accent: 42 122 134;  /* #2A7A86 muted teal       */
-    --c-accent-soft: 32 96 107;
-    --c-accent-ink: 242 246 250;
+    --c-ink: 20 22 27;         /* #14161B ink               */
+    --c-muted: 94 100 110;     /* #5E646E                   */
+    --c-line: 224 227 232;     /* #E0E3E8                   */
+    --c-accent: 60 92 148;     /* #3C5C94 deeper steel      */
+    --c-accent-soft: 44 70 116;
+    --c-accent-ink: 255 255 255;
+
+    --c-panel: 255 255 255;
+    --c-metal: 94 100 110;
+    --c-patch: 60 92 148;
   }
 }
 
@@ -35,6 +48,20 @@
   html {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    scroll-padding-top: 4rem;
+  }
+  /* One decisive section per screen on desktop. Scoped to the homepage via
+     the .snap-page class (added by <SnapScope/>) so other routes scroll
+     normally; only applied at lg+ where a section fits one screen. The
+     footer is its own final snap stop so it stays reachable. */
+  @media (min-width: 1024px) {
+    html.snap-page {
+      scroll-snap-type: y mandatory;
+    }
+    html.snap-page footer {
+      scroll-snap-align: end;
+    }
   }
 
   body {
@@ -43,92 +70,108 @@
     font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
   }
 
+  /* Browser surfaces themed from the palette. */
   ::selection {
-    background-color: rgb(var(--c-accent) / 0.28);
+    background-color: rgb(var(--c-accent) / 0.26);
     color: rgb(var(--c-ink));
   }
-
-  /* Space Grotesk display: tighten tracking slightly for headings */
-  .font-display {
-    letter-spacing: -0.01em;
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--c-bg));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--c-line));
+    border: 3px solid rgb(var(--c-bg));
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--c-muted) / 0.6);
+  }
+  * {
+    scrollbar-color: rgb(var(--c-line)) rgb(var(--c-bg));
   }
 
   .skip-link {
-    @apply absolute -top-12 left-6 z-50 rounded-md bg-accent px-4 py-2 text-accent-ink transition-transform duration-200;
+    @apply absolute -top-12 left-6 z-50 rounded bg-accent px-4 py-2 text-sm text-accent-ink transition-transform duration-200;
   }
   .skip-link:focus {
     @apply top-6;
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--c-accent));
-    outline-offset: 2px;
+    outline: 1.5px solid rgb(var(--c-accent));
+    outline-offset: 3px;
     border-radius: 2px;
   }
 }
 
-/* ============================================================
-   Editorial component vocabulary
-   ============================================================ */
 @layer components {
-  /* Uppercase letter-spaced label with a leading accent tick */
-  .eyebrow {
-    @apply inline-flex items-center gap-3 font-mono text-xs uppercase tracking-eyebrow text-muted;
+  /* Small uppercase label — kept at a legible size (>=11px). */
+  .label {
+    @apply font-mono text-[0.72rem] uppercase text-muted;
+    letter-spacing: 0.2em;
   }
-  .eyebrow::before {
-    content: "";
-    @apply inline-block h-px w-8 bg-accent;
-  }
-
-  /* Oversized faint serif section index, e.g. "01" */
-  .section-index {
-    @apply font-display text-sm font-medium text-accent;
-    font-variant-numeric: tabular-nums;
+  .label-accent {
+    color: rgb(var(--c-accent));
   }
 
-  .hairline {
-    @apply border-0 border-t border-line;
-  }
-
-  /* Buttons — mono, letter-spaced, technical-editorial */
+  /* Buttons — quiet, line-first. */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full font-mono text-xs uppercase tracking-[0.14em] transition-all duration-200 focus-visible:outline-none;
-    padding: 0.8rem 1.4rem;
+    @apply inline-flex items-center justify-center gap-2 rounded-full text-sm font-medium transition-all duration-200 focus-visible:outline-none;
+    padding: 0.72rem 1.4rem;
   }
   .btn-primary {
-    @apply btn bg-accent text-accent-ink hover:bg-accent-soft;
+    background-color: rgb(var(--c-ink));
+    color: rgb(var(--c-bg));
+  }
+  .btn-primary:hover {
+    background-color: rgb(var(--c-accent-soft));
+    color: rgb(var(--c-accent-ink));
   }
   .btn-secondary {
-    @apply btn border border-line text-ink hover:border-ink;
+    border: 1px solid rgb(var(--c-line));
+    color: rgb(var(--c-ink));
+  }
+  .btn-secondary:hover {
+    border-color: rgb(var(--c-ink) / 0.5);
   }
 
-  /* Inline text link with animated underline */
+  /* Inline link with a quiet sliding underline. */
   .link-line {
-    @apply relative font-medium text-accent transition-colors;
+    @apply relative font-medium transition-colors;
+    color: rgb(var(--c-ink));
     background-image: linear-gradient(rgb(var(--c-accent)), rgb(var(--c-accent)));
     background-position: 0 100%;
     background-repeat: no-repeat;
     background-size: 0% 1px;
-    transition: background-size 0.3s ease;
-    padding-bottom: 1px;
+    transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s;
+    padding-bottom: 2px;
   }
   .link-line:hover {
+    color: rgb(var(--c-accent));
     background-size: 100% 1px;
   }
 
+  /* Minimal card: a hairline that warms on hover, no fills. */
   .card {
-    @apply rounded-xl border border-line bg-surface transition-colors duration-300;
+    @apply rounded-xl border transition-colors duration-300;
+    border-color: rgb(var(--c-line));
+    background-color: rgb(var(--c-surface) / 0.4);
   }
 
   .chip {
-    @apply inline-flex items-center rounded-full border border-line px-3 py-1 font-mono text-[0.68rem] uppercase tracking-wider text-muted;
+    @apply inline-flex items-center rounded-full border px-3 py-1 text-xs;
+    border-color: rgb(var(--c-line));
+    color: rgb(var(--c-muted));
   }
 
   .section-padding {
-    @apply px-5 py-20 sm:px-8 md:py-28 lg:px-10;
+    @apply px-5 py-24 sm:px-8 md:py-32 lg:px-10;
   }
 
-  /* Theme-aware long-form prose (Tailwind Typography variables) */
   .prose-blueprint {
     --tw-prose-body: rgb(var(--c-ink) / 0.9);
     --tw-prose-headings: rgb(var(--c-ink));
@@ -149,7 +192,7 @@
   }
   .prose-blueprint :where(h1, h2, h3, h4) {
     font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
   .prose-blueprint :where(code):not(pre code)::before,
   .prose-blueprint :where(code):not(pre code)::after {
@@ -161,6 +204,22 @@
     padding: 0.1rem 0.35rem;
     font-size: 0.85em;
   }
+
+  /* Legacy classes kept (remapped) for not-yet-migrated routes. */
+  .label-legacy,
+  .eyebrow {
+    @apply inline-flex items-center gap-3 font-mono text-xs uppercase text-muted;
+    letter-spacing: 0.2em;
+  }
+  .section-index {
+    @apply font-mono text-sm font-medium;
+    color: rgb(var(--c-accent));
+    font-variant-numeric: tabular-nums;
+  }
+  .hairline {
+    @apply border-0 border-t;
+    border-color: rgb(var(--c-line));
+  }
 }
 
 @layer utilities {
@@ -170,17 +229,20 @@
   .text-pretty {
     text-wrap: pretty;
   }
-  /* Blueprint graph paper — fine minor lines + heavier major lines */
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, rgb(var(--c-line) / 0.6) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--c-line) / 0.6) 1px, transparent 1px),
-      linear-gradient(to right, rgb(var(--c-line) / 0.32) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(var(--c-line) / 0.32) 1px, transparent 1px);
-    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+
+  /* A full-screen section the page snaps to (desktop). The header offset is
+     handled once, by html's scroll-padding-top — no per-section margin. */
+  @media (min-width: 1024px) {
+    .snap-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
   }
 
-  /* Registration corner ticks (blueprint drawing frame) */
+  /* Legacy decorative utilities, neutralized for un-migrated pages. */
+  .bg-grid {
+    background: radial-gradient(70% 60% at 50% 0%, rgb(var(--c-accent) / 0.05), transparent 72%);
+  }
   .tick-corners {
     position: relative;
   }
@@ -188,9 +250,9 @@
   .tick-corners::after {
     content: "";
     position: absolute;
-    width: 12px;
-    height: 12px;
-    border-color: rgb(var(--c-accent));
+    width: 10px;
+    height: 10px;
+    border-color: rgb(var(--c-accent) / 0.5);
     pointer-events: none;
   }
   .tick-corners::before {
@@ -208,6 +270,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html,
+  html.snap-page {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
   *,
   *::before,
   *::after {
