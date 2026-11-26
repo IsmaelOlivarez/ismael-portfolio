@@ -24,6 +24,7 @@ export default function ProjectsPage() {
 
       <section className="section-padding">
         <div className="mx-auto max-w-6xl">
+          <h2 className="sr-only">Projects</h2>
           <Filters projects={projects} />
         </div>
       </section>

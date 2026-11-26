@@ -57,10 +57,10 @@ export function Filters({ projects }: FiltersProps) {
       key={value}
       onClick={onClick}
       aria-pressed={active}
-      className={`rounded-full border px-3 py-1 font-mono text-[0.68rem] uppercase tracking-wider transition-colors ${
+      className={`rounded-full border px-3 py-1 text-xs transition-colors ${
         active
           ? 'border-accent bg-accent text-accent-ink'
-          : 'border-line text-muted hover:border-ink hover:text-ink'
+          : 'border-line text-muted hover:border-ink/40 hover:text-ink'
       }`}
     >
       {value}
@@ -77,16 +77,14 @@ export function Filters({ projects }: FiltersProps) {
           placeholder="Search projects…"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full rounded-full border border-line bg-surface py-3 pl-11 pr-4 font-mono text-sm text-ink placeholder-muted transition-colors focus:border-accent focus:outline-none"
+          className="w-full rounded-full border border-line bg-surface/40 py-3 pl-11 pr-4 text-sm text-ink placeholder-muted transition-colors focus:border-accent focus:outline-none"
         />
       </div>
 
       {/* Filter groups */}
       <div className="space-y-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
-          <span className="shrink-0 pt-1.5 font-mono text-[0.62rem] uppercase tracking-eyebrow text-accent sm:w-28">
-            Tags
-          </span>
+          <span className="label label-accent shrink-0 pt-1.5 sm:w-28">Tags</span>
           <div className="flex flex-wrap gap-2">
             {allTags.map((tag) =>
               filterChip(tag, selectedTags.includes(tag), () =>
@@ -97,9 +95,7 @@ export function Filters({ projects }: FiltersProps) {
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
-          <span className="shrink-0 pt-1.5 font-mono text-[0.62rem] uppercase tracking-eyebrow text-accent sm:w-28">
-            Stack
-          </span>
+          <span className="label label-accent shrink-0 pt-1.5 sm:w-28">Stack</span>
           <div className="flex flex-wrap gap-2">
             {allStacks.map((stack) =>
               filterChip(stack, selectedStacks.includes(stack), () =>
@@ -111,7 +107,7 @@ export function Filters({ projects }: FiltersProps) {
       </div>
 
       {/* Results header */}
-      <div className="flex items-center justify-between border-t border-line pt-6 font-mono text-xs uppercase tracking-wider text-muted">
+      <div className="flex items-center justify-between border-t border-line pt-6 text-sm text-muted">
         <span>
           {filteredProjects.length} / {projects.length} shown
         </span>
@@ -121,7 +117,7 @@ export function Filters({ projects }: FiltersProps) {
             className="inline-flex items-center gap-1 text-accent transition-colors hover:text-ink"
           >
             Clear
-            <X className="h-3 w-3" />
+            <X className="h-3.5 w-3.5" />
           </button>
         )}
       </div>
@@ -134,13 +130,11 @@ export function Filters({ projects }: FiltersProps) {
           ))}
         </div>
       ) : (
-        <div className="border border-dashed border-line py-16 text-center">
-          <p className="font-mono text-sm uppercase tracking-wider text-muted">
-            No projects match your filters
-          </p>
+        <div className="rounded-xl border border-dashed border-line py-16 text-center">
+          <p className="text-sm text-muted">No projects match your filters</p>
           <button
             onClick={clearFilters}
-            className="mt-4 font-mono text-xs uppercase tracking-wider text-accent hover:text-ink"
+            className="mt-4 text-sm text-accent transition-colors hover:text-ink"
           >
             Clear filters
           </button>

@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { ArrowUpRight } from 'lucide-react'
 import type { ProjectFrontmatter } from '@/lib/mdx'
 
@@ -8,20 +7,9 @@ export function ProjectCard({ project }: { project: ProjectFrontmatter; index?: 
   return (
     <Link
       href={`/projects/${project.slug}`}
-      className="card group block overflow-hidden hover:border-ink/25 focus-visible:outline-none"
+      className="card group flex h-full flex-col p-6 hover:border-ink/25 focus-visible:outline-none"
     >
-      {project.coverImage && (
-        <div className="relative aspect-[16/10] overflow-hidden border-b border-line">
-          <Image
-            src={project.coverImage}
-            alt={`${project.title} cover`}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          />
-        </div>
-      )}
-      <div className="p-6">
+      <div>
         <h3 className="font-display text-xl font-semibold leading-snug tracking-tight text-ink transition-colors group-hover:text-accent">
           {project.title}
         </h3>
@@ -35,7 +23,7 @@ export function ProjectCard({ project }: { project: ProjectFrontmatter; index?: 
           ))}
         </div>
 
-        <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
+        <div className="mt-auto flex items-center justify-between border-t border-line pt-5">
           <span className="text-xs text-muted">{project.timeline}</span>
           <span className="inline-flex items-center gap-1 text-sm font-medium text-ink transition-colors group-hover:text-accent">
             View
