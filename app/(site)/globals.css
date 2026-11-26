@@ -48,6 +48,10 @@
   html {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    /* gentle magnetization toward section starts, offset below the header */
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 5rem;
   }
 
   body {
@@ -216,6 +220,12 @@
     text-wrap: pretty;
   }
 
+  /* A section that the page magnetizes to as you scroll near it. */
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-margin-top: 5rem;
+  }
+
   /* Legacy decorative utilities, neutralized for un-migrated pages. */
   .bg-grid {
     background: radial-gradient(70% 60% at 50% 0%, rgb(var(--c-accent) / 0.05), transparent 72%);
@@ -247,6 +257,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
   *,
   *::before,
   *::after {

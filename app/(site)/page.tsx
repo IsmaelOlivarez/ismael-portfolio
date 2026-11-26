@@ -3,6 +3,7 @@ import { getProjects, getBlogPosts } from '@/lib/mdx'
 import { skillsData } from '@/data/skills'
 import { siteConfig } from '@/site.config'
 import { Hero } from '@/components/Hero'
+import { SectionNav } from '@/components/SectionNav'
 import { ProjectCard } from '@/components/ProjectCard'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { generateSEO } from '@/lib/seo'
@@ -16,10 +17,11 @@ export default function HomePage() {
 
   return (
     <div>
+      <SectionNav />
       <Hero />
 
       {/* ===== Selected work ===== */}
-      <section className="section-padding">
+      <section id="work" className="snap-section section-padding">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Selected work" link={{ href: '/projects', label: 'All projects' }} />
           <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -31,7 +33,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== Toolkit ===== */}
-      <section className="section-padding">
+      <section id="toolkit" className="snap-section section-padding">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Toolkit" />
           <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -55,7 +57,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== Writing ===== */}
-      <section className="section-padding">
+      <section id="writing" className="snap-section section-padding">
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Writing" link={{ href: '/blog', label: 'All notes' }} />
           <div className="mt-8">
@@ -83,7 +85,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== Contact ===== */}
-      <section className="section-padding">
+      <section id="contact" className="snap-section section-padding">
         <div className="mx-auto max-w-6xl">
           <h2 className="max-w-3xl text-balance font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl">
             Let&apos;s build something worth shipping.

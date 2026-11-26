@@ -14,7 +14,7 @@ const socials = [
 
 export function Hero() {
   return (
-    <section className="relative">
+    <section id="top" className="snap-section relative">
       <div className="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
         <div className="grid min-h-[86vh] items-center gap-14 py-20 lg:grid-cols-12 lg:gap-10">
           {/* ---- identity ---- */}
