@@ -49,9 +49,19 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
-    /* gentle magnetization toward section starts, offset below the header */
-    scroll-snap-type: y proximity;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 4rem;
+  }
+  /* One decisive section per screen on desktop. Scoped to the homepage via
+     the .snap-page class (added by <SnapScope/>) so other routes scroll
+     normally; only applied at lg+ where a section fits one screen. The
+     footer is its own final snap stop so it stays reachable. */
+  @media (min-width: 1024px) {
+    html.snap-page {
+      scroll-snap-type: y mandatory;
+    }
+    html.snap-page footer {
+      scroll-snap-align: end;
+    }
   }
 
   body {
@@ -220,10 +230,15 @@
     text-wrap: pretty;
   }
 
-  /* A section that the page magnetizes to as you scroll near it. */
+  /* A full-screen section the page snaps to (desktop). */
   .snap-section {
-    scroll-snap-align: start;
-    scroll-margin-top: 5rem;
+    scroll-margin-top: 4rem;
+  }
+  @media (min-width: 1024px) {
+    .snap-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
   }
 
   /* Legacy decorative utilities, neutralized for un-migrated pages. */
@@ -257,7 +272,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
+  html,
+  html.snap-page {
     scroll-behavior: auto;
     scroll-snap-type: none;
   }

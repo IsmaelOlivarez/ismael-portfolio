@@ -4,6 +4,7 @@ import { skillsData } from '@/data/skills'
 import { siteConfig } from '@/site.config'
 import { Hero } from '@/components/Hero'
 import { SectionNav } from '@/components/SectionNav'
+import { SnapScope } from '@/components/SnapScope'
 import { ProjectCard } from '@/components/ProjectCard'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { generateSEO } from '@/lib/seo'
@@ -17,11 +18,15 @@ export default function HomePage() {
 
   return (
     <div>
+      <SnapScope />
       <SectionNav />
       <Hero />
 
       {/* ===== Selected work ===== */}
-      <section id="work" className="snap-section section-padding">
+      <section
+        id="work"
+        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-center"
+      >
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Selected work" link={{ href: '/projects', label: 'All projects' }} />
           <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -33,7 +38,10 @@ export default function HomePage() {
       </section>
 
       {/* ===== Toolkit ===== */}
-      <section id="toolkit" className="snap-section section-padding">
+      <section
+        id="toolkit"
+        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-center"
+      >
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Toolkit" />
           <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
@@ -57,7 +65,10 @@ export default function HomePage() {
       </section>
 
       {/* ===== Writing ===== */}
-      <section id="writing" className="snap-section section-padding">
+      <section
+        id="writing"
+        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-center"
+      >
         <div className="mx-auto max-w-6xl">
           <SectionHeader title="Writing" link={{ href: '/blog', label: 'All notes' }} />
           <div className="mt-8">
@@ -85,7 +96,10 @@ export default function HomePage() {
       </section>
 
       {/* ===== Contact ===== */}
-      <section id="contact" className="snap-section section-padding">
+      <section
+        id="contact"
+        className="snap-section section-padding lg:flex lg:min-h-screen lg:flex-col lg:justify-center"
+      >
         <div className="mx-auto max-w-6xl">
           <h2 className="max-w-3xl text-balance font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-6xl">
             Let&apos;s build something worth shipping.
