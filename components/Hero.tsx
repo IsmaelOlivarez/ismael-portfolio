@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { siteConfig } from '@/site.config'
-import { ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
+import { ArrowDown, ArrowRight, Github, Linkedin, Mail } from 'lucide-react'
 
 const [heroMeta, heroLead] = siteConfig.tagline.split('\n\n').map((s) => s.trim())
 const metaPieces = heroMeta.split('•').map((p) => p.trim())
@@ -48,10 +48,16 @@ export function Hero() {
               className="animate-rise mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
               style={{ animationDelay: '200ms' }}
             >
+              {/* Saved aside — previously navigated to the full projects page:
               <Link href="/projects" className="btn btn-primary">
                 View Work
                 <ArrowRight className="h-4 w-4" />
               </Link>
+              */}
+              <a href="#work" className="btn btn-primary">
+                View Work
+                <ArrowDown className="h-4 w-4" />
+              </a>
               <Link
                 href="/resume.pdf"
                 target="_blank"
